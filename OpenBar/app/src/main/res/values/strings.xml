@@ -10,4 +10,9 @@
     <string name="forgot_password">Forgot ?</string>
     <string name="new_account">New ?</string>
     <string name="logo">Logo de l\'application</string>
+    <string name="email">abc@123.com</string>
+    <string name="already_signup">Already sign in ?</string>
+    <string name="male">M</string>
+    <string name="female">F</string>
+    <string name="title_activity_inscription">InscriptionActivity</string>
 </resources>

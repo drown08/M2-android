@@ -11,9 +11,9 @@
     android:background="@android:color/holo_blue_light"
     android:weightSum="1">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header"/>
 
-    <include layout="@layout/body_connexion" />
+    <include layout="@layout/body_inscription" />
 
     <include layout="@layout/footer" />
 

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:gravity="center">
+
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <RadioButton android:id="@+id/radio_male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/male"
+            android:paddingRight="30dp"
+            />
+        <RadioButton android:id="@+id/radio_female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/female"
+
+            />
+        </RadioGroup>
+
+
+    <EditText
+        android:id="@+id/login_inscription"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/user"
+        />
+
+    <EditText
+        android:id="@+id/password_inscription"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:inputType="textPassword"
+        android:hint="@string/password"
+        />
+
+    <EditText
+        android:id="@+id/email_inscription"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:inputType="textEmailAddress"
+        android:hint="@string/email"
+        />
+
+    <Button
+        android:id="@+id/button_inscription"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/inscription"
+        android:background="@android:color/holo_orange_light"
+        android:padding="55dp"
+        />
+
+    <TextView
+        android:id="@+id/already_sign"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:onClick="test"
+        android:text="@string/already_signup"
+        android:layout_weight="0.5"
+        android:textStyle="italic"
+        android:gravity="right"
+        />
+
+
+</LinearLayout>

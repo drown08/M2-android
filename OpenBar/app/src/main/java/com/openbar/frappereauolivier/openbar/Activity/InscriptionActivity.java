@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.openbar.frappereauolivier.openbar.R;
 
-public class ConnexionActivity extends Activity {
+public class InscriptionActivity extends Activity {
 
 
     @Override
@@ -31,23 +31,23 @@ public class ConnexionActivity extends Activity {
         setContentView(R.layout.activity_connexion);
 
         //Body elements init
-        EditText fieldConnexionLogin = (EditText)this.findViewById(R.id.login_connexion);
-        EditText fieldConnexionPass = (EditText)this.findViewById(R.id.password_connexion);
-        Button buttonLog = (Button)this.findViewById(R.id.button_connexion);
-        TextView buttonNew = (TextView)this.findViewById(R.id.new_account);
-        TextView buttonForgot = (TextView)this.findViewById(R.id.forget_password);
+        //EditText fieldConnexionLogin = (EditText)this.findViewById(R.id.login_connexion);
+        //EditText fieldConnexionPass = (EditText)this.findViewById(R.id.password_connexion);
+        //Button buttonLog = (Button)this.findViewById(R.id.button_connexion);
+        //TextView buttonNew = (TextView)this.findViewById(R.id.new_account);
+        //TextView buttonForgot = (TextView)this.findViewById(R.id.forget_password);
         TextView header = (TextView)this.findViewById((R.id.text_connexion));
 
         //Set the header context
-        header.setText(R.string.connexion);
+        header.setText(R.string.inscription);
 
         //Sets action user
-        buttonLog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickButtonLog(v);
-            }
-        });
+        //buttonLog.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View v) {
+        //        onClickButtonLog(v);
+        //    }
+        //});
 
     }
 
@@ -63,7 +63,7 @@ public class ConnexionActivity extends Activity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-       // int id = item.getItemId();
+        // int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         //if (id == R.id.action_settings) {
@@ -75,7 +75,7 @@ public class ConnexionActivity extends Activity {
     }
 
     private void onClickButtonLog(View v) {
-        Toast.makeText(getApplicationContext(),"Connexion", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Connexion", Toast.LENGTH_LONG).show();
     }
 
     public void test(View v) {
