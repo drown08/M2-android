@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+   <EditText
+       android:id="@+id/login_connexion"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:gravity="center"
+       android:hint="@string/user"
+       />
+
+    <EditText
+        android:id="@+id/password_connexion"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:inputType="textPassword"
+        android:hint="@string/password"
+        />
+
+    <Button
+        android:id="@+id/button_connexion"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/connexion"
+        android:background="@android:color/holo_orange_light"
+        android:padding="55dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:gravity="left">
+
+
+
+        <TextView
+            android:id="@+id/new_account"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="test"
+            android:text="@string/new_account"
+            android:layout_weight="0.5"
+            android:textStyle="italic"
+            android:gravity="left"
+            />
+
+        <ImageView
+            android:contentDescription="@string/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo"
+            android:layout_weight="0.5"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/forget_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="test"
+            android:text="@string/forgot_password"
+            android:layout_weight="0.5"
+            android:textStyle="italic"
+            android:gravity="right"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
