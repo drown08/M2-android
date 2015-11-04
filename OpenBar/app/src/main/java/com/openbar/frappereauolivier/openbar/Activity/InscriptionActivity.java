@@ -1,6 +1,7 @@
 package com.openbar.frappereauolivier.openbar.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,29 +26,20 @@ public class InscriptionActivity extends Activity {
         // Pour cacher la barre de titre
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         // Pour cacher la barre de statut
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+       getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //Ajout de la vue
-        setContentView(R.layout.activity_connexion);
+        setContentView(R.layout.activity_inscription);
 
         //Body elements init
-        //EditText fieldConnexionLogin = (EditText)this.findViewById(R.id.login_connexion);
-        //EditText fieldConnexionPass = (EditText)this.findViewById(R.id.password_connexion);
-        //Button buttonLog = (Button)this.findViewById(R.id.button_connexion);
-        //TextView buttonNew = (TextView)this.findViewById(R.id.new_account);
-        //TextView buttonForgot = (TextView)this.findViewById(R.id.forget_password);
+        TextView boutonConnexion = (TextView)this.findViewById(R.id.already_sign);
         TextView header = (TextView)this.findViewById((R.id.text_connexion));
 
         //Set the header context
         header.setText(R.string.inscription);
 
         //Sets action user
-        //buttonLog.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View v) {
-        //        onClickButtonLog(v);
-        //    }
-        //});
+
 
     }
 
@@ -79,19 +71,10 @@ public class InscriptionActivity extends Activity {
     }
 
     public void test(View v) {
-        switch (v.getId()) {
-            case R.id.forget_password :
-                Toast.makeText(getApplicationContext(),"Pass oublié", Toast.LENGTH_LONG).show();
-                //Appeler L'action appropriée
-                break;
-            case R.id.new_account :
-                Toast.makeText(getApplicationContext(),"Form nouveau",Toast.LENGTH_LONG).show();
-                //Appeler L'action appropriée
-                break;
-            default:
-                Toast.makeText(getApplicationContext(),"Pb receveur",Toast.LENGTH_LONG).show();
-                //Toast une exception
-                break;
-        }
+        Toast.makeText(getApplicationContext(),"Deja inscrit",Toast.LENGTH_LONG).show();
+        //Appeler L'action appropriée
+        Intent i = new Intent();
+        i.setClass(this,ConnexionActivity.class);
+        startActivity(i);
     }
 }

@@ -1,6 +1,7 @@
 package com.openbar.frappereauolivier.openbar.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -87,6 +88,9 @@ public class ConnexionActivity extends Activity {
             case R.id.new_account :
                 Toast.makeText(getApplicationContext(),"Form nouveau",Toast.LENGTH_LONG).show();
                 //Appeler L'action appropriée
+                Intent i = new Intent();
+                i.setClass(this,InscriptionActivity.class);
+                startActivity(i);
                 break;
             default:
                 Toast.makeText(getApplicationContext(),"Pb receveur",Toast.LENGTH_LONG).show();
