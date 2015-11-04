@@ -20,6 +20,10 @@
             android:name=".Activity.InscriptionActivity"
             android:label="@string/title_activity_inscription" >
         </activity>
+        <activity
+            android:name=".Activity.ForgetMailActivity"
+            android:label="@string/title_activity_forget_mail" >
+        </activity>
     </application>
 
 </manifest>

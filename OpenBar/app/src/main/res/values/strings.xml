@@ -15,4 +15,5 @@
     <string name="male">M</string>
     <string name="female">F</string>
     <string name="title_activity_inscription">InscriptionActivity</string>
+    <string name="title_activity_forget_mail">ForgetMailActivity</string>
 </resources>
