@@ -15,8 +15,22 @@ import android.widget.Toast;
 
 import com.openbar.frappereauolivier.openbar.R;
 
+import Evenement.OnClickEvent;
+
 public class ConnexionActivity extends Activity {
 
+    //Attributs widgets of the view
+    TextView buttonNew;
+    TextView buttonForgot;
+    TextView header;
+    EditText fieldConnexionLogin;
+    EditText filedConnexionPass;
+    Button buttonLog;
+
+
+    //Méthodes propres aux activités (implémentées selon les besoins métier de chaque activité : Cf. Story board)
+    //Et c'est tout ce qui doit être définit ici ! Voir chaque "action" à réaliser comme un service à appeler.
+    //Exception à cette règle : traitement de présentations des éléments affichés (traitement statique)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,50 +45,24 @@ public class ConnexionActivity extends Activity {
         //Ajout de la vue
         setContentView(R.layout.activity_connexion);
 
-        //Body elements init
-        EditText fieldConnexionLogin = (EditText)this.findViewById(R.id.login_connexion);
-        EditText fieldConnexionPass = (EditText)this.findViewById(R.id.password_connexion);
-        Button buttonLog = (Button)this.findViewById(R.id.button_connexion);
-        TextView buttonNew = (TextView)this.findViewById(R.id.new_account);
-        TextView buttonForgot = (TextView)this.findViewById(R.id.forget_password);
-        TextView header = (TextView)this.findViewById((R.id.text_connexion));
+        //Récupération des widgets
+        this.fieldConnexionLogin = (EditText)this.findViewById(R.id.login_connexion);
+        this.filedConnexionPass = (EditText)this.findViewById(R.id.password_connexion);
+        this.buttonLog = (Button)this.findViewById(R.id.button_connexion);
+        this.buttonNew = (TextView)this.findViewById(R.id.new_account);
+        this.buttonForgot = (TextView)this.findViewById(R.id.forget_password);
+        this.header = (TextView)this.findViewById((R.id.text_connexion));
 
-        //Set the header context
-        header.setText(R.string.connexion);
+        //Traitement de présentations sur ces widgets
+        this.header.setText(R.string.connexion);
 
-        //Set action user
-        buttonLog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickButtonLog(v);
-            }
-        });
+        //Sets action user (events on the widgets)
+        this.buttonLog.setOnClickListener(new OnClickEvent(this));
+        this.buttonForgot.setOnClickListener(new OnClickEvent(this));
+        this.buttonNew.setOnClickListener(new OnClickEvent((this)));
 
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_connexion, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-       // int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        //if (id == R.id.action_settings) {
-        //    return true;
-        //}
-
-        //return super.onOptionsItemSelected(item);
-        return true;
-    }
 
     private void onClickButtonLog(View v) {
         //TODO : Passer les widgets en attributs de cette classe, pour les isntancier qu'une seule fois et les manipuler de partout
@@ -82,10 +70,10 @@ public class ConnexionActivity extends Activity {
         EditText fieldPseudo = (EditText)this.findViewById(R.id.login_connexion);
         EditText fieldPassword = (EditText)this.findViewById(R.id.password_connexion);
         if (fieldPseudo.getText().toString().length() == 0) {
-            fieldPseudo.setError("Pseudo is required");
+            fieldPseudo.setError("Pseudo iiis required");
         }
         if (fieldPassword.getText().toString().length() == 0) {
-            fieldPassword.setError("Password is required");
+            fieldPassword.setError("Password iiiis required");
         }
 
         if (fieldPseudo.getText().toString().equals("drown")) {
@@ -97,27 +85,6 @@ public class ConnexionActivity extends Activity {
         }
         else {
             Toast.makeText(getApplicationContext(), "Bad pseudo", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public void test(View v) {
-        switch (v.getId()) {
-            case R.id.forget_password :
-                Toast.makeText(getApplicationContext(),"Pass oublié", Toast.LENGTH_LONG).show();
-                //Appeler L'action appropriée (passer par serveur ou web service)
-                //Mais d'abord passer par une activitée nouvelle pour réccupérer le mail.
-                break;
-            case R.id.new_account :
-                Toast.makeText(getApplicationContext(),"Form nouveau",Toast.LENGTH_LONG).show();
-                //Appeler L'action appropriée
-                Intent it = new Intent();
-                it.setClass(this,InscriptionActivity.class);
-                startActivity(it);
-                break;
-            default:
-                Toast.makeText(getApplicationContext(),"Pb receveur",Toast.LENGTH_LONG).show();
-                //Toast une exception
-                break;
         }
     }
 }

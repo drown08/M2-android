@@ -10,13 +10,29 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.openbar.frappereauolivier.openbar.R;
 
+import Evenement.OnClickEvent;
+
 public class InscriptionActivity extends Activity {
 
+    //Attributs widgets of the view
+    TextView boutonConnexion;
+    TextView header;
+    RadioButton male;
+    RadioButton female;
+    EditText login;
+    EditText password;
+    EditText email;
+    Button boutonInscription;
+
+    //Méthodes propres aux activités (implémentées selon les besoins métier de chaque activité : Cf. Story board)
+    //Et c'est tout ce qui doit être définit ici ! Voir chaque "action" à réaliser comme un service à appeler.
+    //Exception à cette règle : traitement de présentations des éléments affichés (traitement statique)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,53 +44,25 @@ public class InscriptionActivity extends Activity {
         // Pour cacher la barre de statut
        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        //Ajout de la vue
+        //Ajout de la vue - initialisation des widgets
         setContentView(R.layout.activity_inscription);
 
-        //Body elements init
-        TextView boutonConnexion = (TextView)this.findViewById(R.id.already_sign);
-        TextView header = (TextView)this.findViewById((R.id.text_connexion));
+        //Récupération des widgets
+        boutonConnexion = (TextView)this.findViewById(R.id.already_sign);
+        header = (TextView)this.findViewById((R.id.text_connexion));
+        boutonInscription = (Button)this.findViewById(R.id.button_inscription);
 
-        //Set the header context
+        //Traitement de présentations sur ces widgets
         header.setText(R.string.inscription);
 
-        //Sets action user
+        //Sets action user (events on the widgets)
+        // méthode onclick du textView -> création objetEvent avec les bons params
+        //Si appelle une Transaction vers une autre activité -> création objetTransac avec les bons params
+        //Si appelle une Communication avec le serveur -> création objetComm avec les bons params
+        boutonConnexion.setOnClickListener(new OnClickEvent(this));
+        boutonInscription.setOnClickListener(new OnClickEvent(this));
 
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.menu_connexion, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        // int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        //if (id == R.id.action_settings) {
-        //    return true;
-        //}
-
-        //return super.onOptionsItemSelected(item);
-        return true;
-    }
-
-    private void onClickButtonLog(View v) {
-        Toast.makeText(getApplicationContext(), "Connexion", Toast.LENGTH_LONG).show();
-    }
-
-    public void test(View v) {
-        Toast.makeText(getApplicationContext(),"Deja inscrit",Toast.LENGTH_LONG).show();
-        //Appeler L'action appropriée
-        Intent i = new Intent();
-        i.setClass(this,ConnexionActivity.class);
-        startActivity(i);
-    }
 }

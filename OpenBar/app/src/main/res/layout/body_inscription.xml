@@ -8,6 +8,7 @@
 
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/group_sexe_inscription"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -22,7 +23,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/female"
-
             />
         </RadioGroup>
 
@@ -58,7 +58,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/inscription"
-        android:background="@android:color/holo_orange_light"
+        android:background="@drawable/arrondis"
         android:padding="55dp"
         />
 
@@ -67,7 +67,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:onClick="test"
         android:text="@string/already_signup"
         android:layout_weight="0.5"
         android:textStyle="italic"
