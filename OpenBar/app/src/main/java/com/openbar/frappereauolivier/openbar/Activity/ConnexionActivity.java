@@ -62,29 +62,5 @@ public class ConnexionActivity extends Activity {
         this.buttonNew.setOnClickListener(new OnClickEvent((this)));
 
     }
-
-
-    private void onClickButtonLog(View v) {
-        //TODO : Passer les widgets en attributs de cette classe, pour les isntancier qu'une seule fois et les manipuler de partout
-        //TODO : Trouver l'api pour tester si un champ est valide par rapport à une liste de string
-        EditText fieldPseudo = (EditText)this.findViewById(R.id.login_connexion);
-        EditText fieldPassword = (EditText)this.findViewById(R.id.password_connexion);
-        if (fieldPseudo.getText().toString().length() == 0) {
-            fieldPseudo.setError("Pseudo iiis required");
-        }
-        if (fieldPassword.getText().toString().length() == 0) {
-            fieldPassword.setError("Password iiiis required");
-        }
-
-        if (fieldPseudo.getText().toString().equals("drown")) {
-            if(fieldPassword.getText().toString().equals("drown")) {
-                Toast.makeText(getApplicationContext(),"Connexion", Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(getApplicationContext(),"Bad password", Toast.LENGTH_LONG).show();
-            }
-        }
-        else {
-            Toast.makeText(getApplicationContext(), "Bad pseudo", Toast.LENGTH_LONG).show();
-        }
-    }
+    
 }
