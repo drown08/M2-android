@@ -62,5 +62,5 @@ public class ConnexionActivity extends Activity {
         this.buttonNew.setOnClickListener(new OnClickEvent((this)));
 
     }
-    
+
 }

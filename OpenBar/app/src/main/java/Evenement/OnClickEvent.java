@@ -10,6 +10,7 @@ import com.openbar.frappereauolivier.openbar.Activity.ConnexionActivity;
 import com.openbar.frappereauolivier.openbar.Activity.InscriptionActivity;
 import com.openbar.frappereauolivier.openbar.R;
 
+import CommunicationServeur.CommunicationService;
 import Transaction.Transaction;
 import Validation.ConnexionValidation;
 import Validation.InscriptionValidation;
@@ -67,9 +68,11 @@ public class OnClickEvent implements View.OnClickListener {
                 myValidation.addFieldEditText(passCon);
                 boolean isOk = myValidation.validate();
                 if (isOk) {
-                    Toast.makeText(myActivity.getApplicationContext(),"Connexion...", Toast.LENGTH_LONG).show();
-                    //TODO : Appeler CommunicationServeur avec les params ("log-user",logCon.text()concat;concat passCon.text())
-                    //
+                    Toast.makeText(myActivity.getApplicationContext(),"Connexion...", Toast.LENGTH_SHORT).show();
+                    CommunicationService.getInstance().addParams("log", logCon.getText().toString()); //Ajout de ce qu on demande au serveur avec params
+                    String jsp = CommunicationService.getInstance().sendToServer(); //On l'envoit au serveur, et on réccupère
+                    Toast.makeText(myActivity.getApplication(),jsp, Toast.LENGTH_LONG).show(); //ON affiche
+                    CommunicationService.getInstance().flush(); //On vide les params
                 } else {
                     Toast.makeText(myActivity.getApplicationContext(),"Remplir correctement", Toast.LENGTH_LONG).show();
                 }
