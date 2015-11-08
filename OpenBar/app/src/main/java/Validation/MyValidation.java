@@ -1,9 +1,10 @@
 package Validation;
 
-import android.view.View;
+import android.app.Activity;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
+
+import com.openbar.frappereauolivier.openbar.R;
 
 import java.util.ArrayList;
 
@@ -14,10 +15,12 @@ public class MyValidation {
 
     private ArrayList<EditText> myFieldsEditText;
     private ArrayList<RadioGroup> myFieldsRadioButtonGroup;
+    Activity myActivity;
 
-    public MyValidation() {
+    public MyValidation(Activity act) {
         this.myFieldsEditText = new ArrayList<EditText>();
         this.myFieldsRadioButtonGroup = new ArrayList<RadioGroup>();
+        this.myActivity = act;
     }
 
     public void setMyFieldsEditText(ArrayList<EditText> lv) {
@@ -66,6 +69,20 @@ public class MyValidation {
 
     public void removeFieldRadioGroupButtonAt(int index) {
         this.myFieldsRadioButtonGroup.remove(index);
+    }
+
+    protected boolean isValidEmail(CharSequence target) {
+        if (target == null) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        }
+    }
+
+    protected boolean areTheSamePassword() {
+        EditText mdp1 = (EditText)this.myActivity.findViewById(R.id.password_inscription);
+        EditText mdp2 = (EditText)this.myActivity.findViewById(R.id.password_confirm_inscription);
+        return (mdp1.getText().toString().equals(mdp2.getText().toString()));
     }
 
 

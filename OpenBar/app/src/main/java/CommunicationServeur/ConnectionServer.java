@@ -1,5 +1,7 @@
 package CommunicationServeur;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,6 +21,7 @@ public class ConnectionServer {
     }
 
     public void setUrl(String urlBuilded) {
+        Log.d("URLBUILDED",urlBuilded);
         try {
             this.url = new URL(urlBuilded);
         } catch (MalformedURLException e) {
@@ -27,6 +30,7 @@ public class ConnectionServer {
     }
 
     public String post() {
+        //Par défaut la requète est en GET
         String input = "rien";
         try {
             this.connexion = (HttpURLConnection)this.url.openConnection();

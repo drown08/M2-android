@@ -1,22 +1,17 @@
 package com.openbar.frappereauolivier.openbar.Activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.openbar.frappereauolivier.openbar.R;
 
-import Evenement.OnClickEvent;
+import Evenement.OnClickEventInscriptionConnexionForgot;
 
 public class InscriptionActivity extends Activity {
 
@@ -27,6 +22,7 @@ public class InscriptionActivity extends Activity {
     RadioButton female;
     EditText login;
     EditText password;
+    EditText confirmPassword;
     EditText email;
     Button boutonInscription;
 
@@ -53,16 +49,20 @@ public class InscriptionActivity extends Activity {
         boutonInscription = (Button)this.findViewById(R.id.button_inscription);
 
         //Traitement de présentations sur ces widgets
-        header.setText(R.string.inscription);
+        setSpecifyPresentation();
 
         //Sets action user (events on the widgets)
         // méthode onclick du textView -> création objetEvent avec les bons params
         //Si appelle une Transaction vers une autre activité -> création objetTransac avec les bons params
         //Si appelle une Communication avec le serveur -> création objetComm avec les bons params
-        boutonConnexion.setOnClickListener(new OnClickEvent(this));
-        boutonInscription.setOnClickListener(new OnClickEvent(this));
+        boutonConnexion.setOnClickListener(new OnClickEventInscriptionConnexionForgot(this));
+        boutonInscription.setOnClickListener(new OnClickEventInscriptionConnexionForgot(this));
 
 
+    }
+
+    private void setSpecifyPresentation() {
+        header.setText(R.string.inscription);
     }
 
 }

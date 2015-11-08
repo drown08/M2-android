@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:layout_weight="1"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <EditText
+        android:id="@+id/login_send_mail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="@string/user"
+        />
+
+    <EditText
+        android:id="@+id/email_send_mail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:inputType="textEmailAddress"
+        android:hint="@string/email"
+        />
+
+    <Button
+        android:id="@+id/button_send_mail"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/send_mail_forgot"
+        android:background="@drawable/arrondis"
+        android:padding="55dp"
+        />
+
+    <TextView
+        android:id="@+id/back_connexion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:text="@string/connexion"
+        android:layout_weight="0.5"
+        android:textStyle="italic"
+        android:gravity="right"
+        />
+
+</LinearLayout>

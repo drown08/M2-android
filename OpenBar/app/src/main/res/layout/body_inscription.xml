@@ -45,6 +45,15 @@
         />
 
     <EditText
+        android:id="@+id/password_confirm_inscription"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:inputType="textPassword"
+        android:hint="@string/password_confirm"
+        />
+
+    <EditText
         android:id="@+id/email_inscription"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

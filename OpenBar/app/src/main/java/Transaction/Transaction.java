@@ -1,10 +1,9 @@
 package Transaction;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Frappereau Olivier on 05/11/2015.
@@ -37,8 +36,13 @@ public class Transaction {
     }
 
     //Ajouter n'importe quel extra à la transaction
-    public void addExtras(String name, Class<Object> o) {
-        this.myTransaction.putExtra(name,o);
+    public void addExtras(String name, List<? extends Object> list) {
+        for(Object o : list)
+        {
+            this.myTransaction.putExtra(name, String.valueOf(o)); //Attention, l'activité reçevra que des strings.
+            //Caster au traitement si besoin
+        }
+
     }
 
     //Lancer l'activité et détruire la précédente

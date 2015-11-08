@@ -7,6 +7,7 @@
     <string name="inscription">Inscription</string>
     <string name="user" >Login</string>
     <string name="password">Password</string>
+    <string name="password_confirm">Confirm password</string>
     <string name="forgot_password">Forgot ?</string>
     <string name="new_account">New ?</string>
     <string name="logo">Logo de l\'application</string>
@@ -16,4 +17,11 @@
     <string name="female">F</string>
     <string name="title_activity_inscription">InscriptionActivity</string>
     <string name="title_activity_forget_mail">ForgetMailActivity</string>
+    <string name="email_well_formed">Email is not well-formed</string>
+    <string name="password_length">Password is lg than 8chars</string>
+    <string name="pseudo_length">Pseudo is lg than 5 chars</string>
+    <string name="sexe_type">You must choose a type !</string>
+    <string name="password_same">Password fields must be the same</string>
+    <string name="send_mail_forgot">Send</string>
+    <string name="forget_password">Forget password</string>
 </resources>

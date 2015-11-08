@@ -1,21 +1,16 @@
 package com.openbar.frappereauolivier.openbar.Activity;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.openbar.frappereauolivier.openbar.R;
 
-import Evenement.OnClickEvent;
+import Evenement.OnClickEventInscriptionConnexionForgot;
 
 public class ConnexionActivity extends Activity {
 
@@ -54,13 +49,17 @@ public class ConnexionActivity extends Activity {
         this.header = (TextView)this.findViewById((R.id.text_connexion));
 
         //Traitement de présentations sur ces widgets
-        this.header.setText(R.string.connexion);
+        setSpecifyPresentation();
 
         //Sets action user (events on the widgets)
-        this.buttonLog.setOnClickListener(new OnClickEvent(this));
-        this.buttonForgot.setOnClickListener(new OnClickEvent(this));
-        this.buttonNew.setOnClickListener(new OnClickEvent((this)));
+        this.buttonLog.setOnClickListener(new OnClickEventInscriptionConnexionForgot(this));
+        this.buttonForgot.setOnClickListener(new OnClickEventInscriptionConnexionForgot(this));
+        this.buttonNew.setOnClickListener(new OnClickEventInscriptionConnexionForgot((this)));
 
+    }
+
+    private void setSpecifyPresentation() {
+        this.header.setText(R.string.connexion);
     }
 
 }

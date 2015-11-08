@@ -2,38 +2,53 @@ package com.openbar.frappereauolivier.openbar.Activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.openbar.frappereauolivier.openbar.R;
 
+import Evenement.OnClickEventInscriptionConnexionForgot;
+
 public class ForgetMailActivity extends Activity {
+
+    EditText pseudo;
+    EditText mail;
+    TextView retourConnexion;
+    Button send;
+    TextView header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_forget_mail);
+
+        this.pseudo = (EditText) this.findViewById(R.id.login_send_mail);
+        //this.mail = (EditText) this.findViewById(R.id.email_send_mail);
+        this.send = (Button) this.findViewById(R.id.button_send_mail);
+        this.header = (TextView)this.findViewById((R.id.text_connexion));
+        this.retourConnexion = (TextView)this.findViewById(R.id.back_connexion);
+
+        setSpecifyPresentation();
+
+        this.send.setOnClickListener(new OnClickEventInscriptionConnexionForgot(this));
+        this.retourConnexion.setOnClickListener(new OnClickEventInscriptionConnexionForgot(this));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_forget_mail, menu);
-        return true;
-    }
+    private void setSpecifyPresentation() {
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        this.header.setText(R.string.forget_password);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if(this.getIntent().getStringExtra("pseudo")!=null) {
+            this.pseudo.setText(this.getIntent().getStringExtra("pseudo"));
         }
-
-        return super.onOptionsItemSelected(item);
     }
+
 }

@@ -1,7 +1,9 @@
 package CommunicationServeur;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -11,14 +13,14 @@ import java.util.concurrent.ExecutionException;
 public class CommunicationService {
     private static CommunicationService myInstance = null;
     private AsyncRequestServer mySender;
-    private LinkedHashMap<String,String> params;
+    private LinkedHashMap params;
     private static String reponse; //Useless avec ma solution mySend.get() (qui reçoit la rep) ???
-    private static final String URL_SERVER = "http://127.0.0.1/serveurOpenBar/server.php";
+    private static final String URL_SERVER = "http://10.0.2.2/serveurOpenBar/server.php";
     private static boolean onCharge;
 
     private CommunicationService() {
         mySender = new AsyncRequestServer();
-        params = new LinkedHashMap<>();
+        params = new LinkedHashMap();
         reponse = "riendutoutinit";
     }
 
@@ -29,15 +31,16 @@ public class CommunicationService {
         return myInstance;
     }
 
-    public void addParams(String key, String value) {
-        this.params.put(key, value);
+    public void addParams(String key, String value)
+    {
+         this.params.put(key.toString(), value.toString());
     }
 
     public String sendToServer() {
         //This is a thread who execute the static method createResponse(rep)
-        //mySender.execute(buildRequest());
+        mySender.execute(buildRequest());
         //mySender.execute("http://www.google.com");
-        mySender.execute("http://10.0.2.2/serveurOpenBar/server.php");
+       // mySender.execute("http://10.0.2.2/serveurOpenBar/server.php");
         String result = "";
         try {
             result = mySender.get(); //WOW ? Remplace la méthode onPostResume() du thread mySender ???
@@ -50,15 +53,14 @@ public class CommunicationService {
     }
 
     private String buildRequest(){
-        String query = URL_SERVER +"?id=0";
-
-        for(Map.Entry<String, String> entry : this.params.entrySet())
-        {
-            String cle = entry.getKey();
-            String valeur = entry.getValue();
-
+        String query = URL_SERVER +"?id=10";
+        Set set = this.params.entrySet();
+        Iterator i = set.iterator();
+        while(i.hasNext()) {
+            Map.Entry me = (Map.Entry)i.next();
+            String cle = me.getKey().toString();
+            String valeur = me.getValue().toString();
             query +="&"+cle+"="+valeur;
-            //System.out.println(valeur);
         }
         return query;
     }

@@ -12,8 +12,8 @@ import com.openbar.frappereauolivier.openbar.R;
 public class ConnexionValidation extends MyValidation {
 
 
-    public ConnexionValidation() {
-        super();
+    public ConnexionValidation(Activity activity) {
+        super(activity);
     }
 
     public boolean validate() {
