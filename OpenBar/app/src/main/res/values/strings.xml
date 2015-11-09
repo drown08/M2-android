@@ -24,4 +24,6 @@
     <string name="password_same">Password fields must be the same</string>
     <string name="send_mail_forgot">Send</string>
     <string name="forget_password">Forget password</string>
+    <string name="title_activity_focus">FocusActivity</string>
+    <string name="action_favorite">profil</string>
 </resources>
