@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.openbar.frappereauolivier.openbar.Activity.ConnexionActivity;
 import com.openbar.frappereauolivier.openbar.R;
+
+import Transaction.Transaction;
 
 /**
  * Created by Frappereau Olivier on 08/11/2015.
@@ -21,12 +24,14 @@ public class OnActionBarMenuSelected {
 
     public boolean manageActionUsers() {
         switch (this.myItem.getItemId()) {
-            case R.id.action_settings :
-                Toast.makeText(this.myActivity.getApplicationContext(),"héhé",Toast.LENGTH_SHORT).show();
+            case R.id.action_signout:
+                Toast.makeText(this.myActivity.getApplicationContext(),"Déconnexion...",Toast.LENGTH_SHORT).show();
+                Transaction signOut = new Transaction(myActivity, ConnexionActivity.class);
+                signOut.exitAndRun();
                 return true;
 
             case R.id.action_favorite :
-                Toast.makeText(this.myActivity.getApplicationContext(),"huhu",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.myActivity.getApplicationContext(),"Profil",Toast.LENGTH_SHORT).show();
                 return true;
 
             default:

@@ -126,7 +126,7 @@ public class OnClickEventInscriptionConnexionForgot implements View.OnClickListe
 
     @Override
     public void processFinish(String output) {
-         if (output == "send") {
+         if (output.equals("send")) {
             Toast.makeText(myActivity.getApplicationContext(),"GOOD",Toast.LENGTH_LONG).show();
           } else {
             Toast.makeText(myActivity.getApplicationContext(),output,Toast.LENGTH_LONG).show();

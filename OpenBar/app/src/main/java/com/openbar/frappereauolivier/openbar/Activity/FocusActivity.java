@@ -13,7 +13,7 @@ import Evenement.OnActionBarMenuSelected;
 
 public class FocusActivity extends AppCompatActivity {
     Toolbar myToolbar;
-//TODO : Installer et utiliser ActionBarSherlock
+//TODO : Installer et utiliser ActionBarSherlock ?
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,8 +53,8 @@ public class FocusActivity extends AppCompatActivity {
         setSupportActionBar(this.myToolbar);
         // Get a support ActionBar corresponding to this toolbar
         ActionBar ab = getSupportActionBar();
-
-        // Enable the Up button
+        ab.setTitle("Mes bars");
+        // Enable the Up (back P/R à l'activité parente) button
         ab.setDisplayHomeAsUpEnabled(true);
 
     }
