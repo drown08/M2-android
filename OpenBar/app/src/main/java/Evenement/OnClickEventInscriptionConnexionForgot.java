@@ -15,6 +15,7 @@ import com.openbar.frappereauolivier.openbar.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import CommunicationServeur.AsyncTaskResponse;
 import CommunicationServeur.CommunicationService;
 import Transaction.Transaction;
 import Validation.ConnexionValidation;
@@ -25,7 +26,7 @@ import Validation.InscriptionValidation;
  * Created by Frappereau Olivier on 05/11/2015.
  * Offer the dispatcher event of click on this application, what buisness can do for each case
  */
-public class OnClickEventInscriptionConnexionForgot implements View.OnClickListener {
+public class OnClickEventInscriptionConnexionForgot implements View.OnClickListener, AsyncTaskResponse {
     private Activity myActivity;
 
     public OnClickEventInscriptionConnexionForgot(Activity a) {
@@ -82,8 +83,8 @@ public class OnClickEventInscriptionConnexionForgot implements View.OnClickListe
                 boolean isOk = myValidation.validate();
                 if (isOk) {
                     Toast.makeText(myActivity.getApplicationContext(),"Connexion...", Toast.LENGTH_SHORT).show();
-                    //CommunicationService.getInstance().addParams("log", logCon.getText().toString()); //Ajout de ce qu on demande au serveur avec params
-                    //String jsp = CommunicationService.getInstance().sendToServer(); //On l'envoit au serveur, et on réccupère
+                    //CommunicationService commTmpConn = new CommunicationService(); //Ajout de ce qu on demande au serveur avec params
+                    //String jsp = CommunicationService.sendToServer(); //On l'envoit au serveur, et on réccupère
                     //Toast.makeText(myActivity.getApplication(),jsp, Toast.LENGTH_LONG).show(); //ON affiche
                     //CommunicationService.getInstance().flush(); //On vide les params
                     //Puis, on passe a l'activité principale : Nommée Focus (pour le moment)
@@ -104,17 +105,14 @@ public class OnClickEventInscriptionConnexionForgot implements View.OnClickListe
                 boolean goSend = myValidationForgot.validate();
                 if(goSend) {
                     Toast.makeText(myActivity.getApplicationContext(), "Ok, verification pseudo -> mail...", Toast.LENGTH_SHORT).show();
-                    CommunicationService commTmp = CommunicationService.getInstance();
+                    CommunicationService commTmp = new CommunicationService(this);
                     commTmp.addParams("ctrl", "mail");
                     commTmp.addParams("pseudo", logForgotPass.getText().toString());
                     commTmp.addParams("mail", mailForgotPass.getText().toString());
-                    String ok = commTmp.sendToServer();
+                    commTmp.sendToServer();
+                    //String ok = commTmp.getReponse();
                     commTmp.flush();
-                    if (ok == "send") {
-                        Toast.makeText(myActivity.getApplicationContext(),"Mail mdp send :-)",Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(myActivity.getApplicationContext(),ok,Toast.LENGTH_LONG).show();
-                    }
+
                 } else {
                     Toast.makeText(myActivity.getApplicationContext(),"BADDD REMPLI BIEN !", Toast.LENGTH_SHORT).show();
                 }
@@ -124,5 +122,15 @@ public class OnClickEventInscriptionConnexionForgot implements View.OnClickListe
                 retour.exitAndRun();
                 break;
         }
+    }
+
+    @Override
+    public void processFinish(String output) {
+         if (output == "send") {
+            Toast.makeText(myActivity.getApplicationContext(),"GOOD",Toast.LENGTH_LONG).show();
+          } else {
+            Toast.makeText(myActivity.getApplicationContext(),output,Toast.LENGTH_LONG).show();
+         }
+
     }
 }

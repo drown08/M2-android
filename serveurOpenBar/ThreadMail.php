@@ -21,6 +21,7 @@ class ThreadMail {
 	}
 
 	public function run() {
+		ini_set('SMTP',"smtp.univ-montp2.fr"); //A la fac
 		$this->sendMail();
 	}
 

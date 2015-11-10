@@ -1,18 +1,21 @@
 package CommunicationServeur;
 
 import android.os.AsyncTask;
-
-import static CommunicationServeur.CommunicationService.createResponse;
+import android.util.Log;
 
 /**
  * Created by Frappereau Olivier on 06/11/2015.
  */
 public class AsyncRequestServer extends AsyncTask<String,Void,String> {
 
+    private AsyncTaskResponse delegate = null;
     private ConnectionServer myServer;
+    private String myReponse;
 
-    public AsyncRequestServer() {
+    public AsyncRequestServer(AsyncTaskResponse delegate) {
         myServer = new ConnectionServer();
+        this.myReponse="";
+        this.delegate = delegate;
     }
 
     @Override
@@ -25,7 +28,17 @@ public class AsyncRequestServer extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String reponse) {
-        //Static method of CommunicationService; n'est pas appellée grâce à ma solution ??
-        createResponse(reponse);
+        delegate.processFinish(reponse);
+        //setMyReponse(reponse);
+    }
+
+    private void setMyReponse(String rep) {
+        Log.d("rtnRepSetMyReponse()", rep);
+        this.myReponse = rep;
+    }
+
+    public String getMyReponse() {
+        Log.d("rtnRepgetMyReponse()", myReponse);
+        return this.myReponse;
     }
 }
