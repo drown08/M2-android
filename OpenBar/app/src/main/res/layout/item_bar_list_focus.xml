@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="6dp" >
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="16dp"
+        android:contentDescription="GoToBar"
+        android:src="@drawable/options_test" />
+
+    <TextView
+        android:id="@+id/secondLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="Nom du bar"
+        android:textSize="30sp"
+        android:layout_toRightOf="@+id/icon"
+        android:layout_alignParentTop="true"/>
+
+    <TextView
+        android:id="@+id/firstLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/icon"
+        android:layout_below="@+id/secondLine"
+        android:text="Infos utiles"
+         />
+
+</RelativeLayout> 

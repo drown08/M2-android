@@ -24,14 +24,18 @@ public class OnActionBarMenuSelected {
 
     public boolean manageActionUsers() {
         switch (this.myItem.getItemId()) {
-            case R.id.action_signout:
+            case R.id.action_signout:// CLIQUE SUR LE HAMB -> SignOut
                 Toast.makeText(this.myActivity.getApplicationContext(),"Déconnexion...",Toast.LENGTH_SHORT).show();
                 Transaction signOut = new Transaction(myActivity, ConnexionActivity.class);
                 signOut.exitAndRun();
                 return true;
 
-            case R.id.action_favorite :
+            case R.id.action_favorite : // CLIQUE SUR PROFIL
                 Toast.makeText(this.myActivity.getApplicationContext(),"Profil",Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.action_refresh : // CLIQUE SUR REFRESH
+                Toast.makeText(this.myActivity.getApplicationContext(),"Refresh", Toast.LENGTH_SHORT).show();
                 return true;
 
             default:

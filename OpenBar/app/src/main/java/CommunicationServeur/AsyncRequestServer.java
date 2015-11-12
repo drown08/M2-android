@@ -18,6 +18,11 @@ public class AsyncRequestServer extends AsyncTask<String,Void,String> {
         this.delegate = delegate;
     }
 
+    /*@Override
+    protected void onPreExecute() {
+        setProgressBarIndeterminateVisibilty(true);
+    }*/
+
     @Override
     protected String doInBackground(String... params) {
         myServer.setUrl(params[0]);
