@@ -2,13 +2,112 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_light"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.openbar.frappereauolivier.openbar.Activity.FocusActivity"
     android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_dark"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        />
 
-   <include layout="@layout/header_focus" />
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/coordinator_focus"
+        android:background="@android:color/holo_blue_light"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <include layout="@layout/recyclerviewlistbar_layout" />
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_blue_light"
 
+            android:orientation="vertical">-->
+
+        <!--<include layout="@layout/header_focus" />-->
+
+
+        <!-- <include layout="@layout/recyclerviewlistbar_layout" /> -->
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/cardListBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_weight="1" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <!-- <include layout="@layout/floating_button_add_bar_layout" /> -->
+       <!-- <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_anchor="@id/cardListBar"
+            app:layout_anchorGravity="bottom|right|end"
+            android:layout_gravity="bottom|right">-->
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                app:layout_anchor="@id/cardListBar"
+                app:layout_anchorGravity="bottom|right|end"
+                android:src="@drawable/ic_add"
+                app:layout_behavior="com.openbar.frappereauolivier.openbar.Activity.ScrollAwareFABBehavior"
+                android:layout_gravity="bottom|right"
+                app:elevation="8dp"
+                app:fabSize="normal"
+                app:pressedTranslationZ="12dp"
+
+                android:layout_alignParentBottom="true"
+                android:layout_alignEnd="@+id/fab_mini_1" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_anchor="@id/fab"
+                android:id="@+id/fab_mini_1"
+                app:fabSize="mini"
+                app:elevation="4dp"
+                app:pressedTranslationZ="12dp"
+                android:src="@drawable/ic_plus_circle"
+                android:layout_gravity="right"
+                app:layout_anchorGravity="top|center_vertical"
+                android:layout_alignTop="@+id/fab"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="104dp" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_anchor="@id/fab"
+            android:id="@+id/fab_mini_2"
+            app:fabSize="mini"
+            app:elevation="4dp"
+            app:pressedTranslationZ="12dp"
+            android:src="@drawable/ic_favorite_black_48dp"
+            android:layout_gravity="right"
+            app:layout_anchorGravity="top|center_vertical"
+            android:layout_marginBottom="131dp"
+            android:layout_above="@+id/fab"
+            android:layout_toStartOf="@+id/fab_mini_1" />
+
+
+            <!--</LinearLayout>-->
+        <!--</RelativeLayout>-->
+
+    </android.support.design.widget.CoordinatorLayout>
 
 </LinearLayout>

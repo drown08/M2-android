@@ -1,12 +1,15 @@
 package com.openbar.frappereauolivier.openbar.Activity;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -16,6 +19,8 @@ import java.util.ArrayList;
 
 import Adapter.BarAdapter;
 import Evenement.OnActionBarMenuSelected;
+import Evenement.OnClickAddBarFAB;
+import Evenement.OnRefreshListBar;
 import Model.Bar;
 
 public class FocusActivity extends AppCompatActivity {
@@ -23,6 +28,10 @@ public class FocusActivity extends AppCompatActivity {
     RecyclerView recListBar;
    public BarAdapter barAdapter;
     ArrayList<Bar> myBars;
+    FloatingActionButton myFABAddBar;
+    FloatingActionButton myFABMiniAddBar1;
+    FloatingActionButton myFABMiniAddBar2;
+    SwipeRefreshLayout mySRL;
 
 //TODO : Installer et utiliser ActionBarSherlock ?
     @Override
@@ -64,6 +73,23 @@ public class FocusActivity extends AppCompatActivity {
 
         setListOfBarView();
 
+        setFABView();
+
+    }
+
+    private void setFABView() {
+
+        this.myFABAddBar = (FloatingActionButton)findViewById(R.id.fab);
+        this.myFABAddBar.setOnClickListener(new OnClickAddBarFAB(this,myFABAddBar));
+        this.myFABAddBar.show();
+
+        this.myFABMiniAddBar1 = (FloatingActionButton) findViewById(R.id.fab_mini_1);
+        this.myFABMiniAddBar1.setOnClickListener(new OnClickAddBarFAB(this,myFABMiniAddBar1));
+        this.myFABMiniAddBar1.hide();
+
+        this.myFABMiniAddBar2 = (FloatingActionButton) findViewById(R.id.fab_mini_2);
+        this.myFABMiniAddBar2.setOnClickListener(new OnClickAddBarFAB(this,myFABMiniAddBar2));
+        this.myFABMiniAddBar2.hide();
     }
 
     private void setToolBarView() {
@@ -88,6 +114,32 @@ public class FocusActivity extends AppCompatActivity {
         barAdapter = new BarAdapter(myBars,this);
         recListBar.setAdapter(barAdapter);
         recListBar.setItemAnimator(new DefaultItemAnimator());
+
+        //Set refresh action to the liste
+        mySRL = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        mySRL.setOnRefreshListener(new OnRefreshListBar(this,mySRL));
+
+        //Adjust when refresh action is available
+        //recListBar.addOnScrollListener(new OnScrollAction(this,mySRL,recListBar));
+        recListBar.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                //super.onScrolled(recyclerView, dx, dy);
+                boolean enable = false;
+                if(recListBar != null && recListBar.getChildCount() > 0){
+                    // check if the first item of the list is visible
+                    //boolean firstItemVisible = true;
+                    //boolean firstItemVisible = recListBar.() == 0;
+                    // check if the top of the first item is visible
+                    boolean topOfFirstItemVisible = recListBar.getChildAt(0).getTop() == 0;
+                    // enabling or disabling the refresh layout
+                    //enable = firstItemVisible && topOfFirstItemVisible;
+                    enable = topOfFirstItemVisible;
+                }
+                Log.d("MethodCalled", String.valueOf(enable));
+                mySRL.setEnabled(enable);
+            }
+        });
     }
 
     private ArrayList<Bar> setListBar() {

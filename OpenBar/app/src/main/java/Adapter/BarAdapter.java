@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.openbar.frappereauolivier.openbar.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import Evenement.OnClickAtBar;
@@ -58,14 +59,26 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
         notifyItemInserted(position);
     }
 
-    public  void removeBar(int position) {
+    public Bar removeBar(int position) {
+        Bar barDeleted = this.barList.get(position);
         this.barList.remove(position);
         notifyItemRemoved(position);
+        return barDeleted;
+    }
+
+    public void undoRemove(Bar b, int position) {
+        this.barList.add(position, b);
+        notifyItemChanged(position, b);
     }
 
     public void updateBar(int position,Bar bar) {
-        this.barList.set(position,bar);
+        this.barList.set(position, bar);
         notifyItemChanged(position);
+    }
+
+    public void UPBarList(ArrayList<Bar> l) {
+        this.barList = l ;
+        notifyDataSetChanged();
     }
 
     public static class BarViewHolder extends RecyclerView.ViewHolder  {
