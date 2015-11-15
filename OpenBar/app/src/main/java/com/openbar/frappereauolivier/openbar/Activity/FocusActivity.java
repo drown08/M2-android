@@ -99,7 +99,7 @@ public class FocusActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setTitle("Mes bars");
         // Enable the Up (back P/R à l'activité parente) button
-        ab.setDisplayHomeAsUpEnabled(true);
+        //ab.setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -155,5 +155,9 @@ public class FocusActivity extends AppCompatActivity {
         tmp.add(new Bar("Bar 7","Diffuse match basket",R.drawable.options_test));
         tmp.add(new Bar("Bar 8","Diffuse match Hockey",R.drawable.options_test));
         return tmp;
+    }
+
+    public Bar getBarByRange(int range) {
+        return this.myBars.get(range);
     }
 }
