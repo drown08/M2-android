@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,12 +28,15 @@ import com.openbar.frappereauolivier.openbar.R;
 
 import Adapter.GalleryAdapter;
 import Evenement.OnAddNewActivity;
+import Evenement.OnClickDisplayFocuses;
 
 /**
  * Created by Frappereau Olivier on 15/11/2015.
  */
 public class TabBarInfos extends Fragment implements GalleryAdapter.OnItemClickListener {
     TextView infos;
+    TextView photosField;
+    TextView actField;
     View mainV;
     ImageView displayImg;
     LinearLayout myDisplayingPicture;
@@ -40,6 +44,7 @@ public class TabBarInfos extends Fragment implements GalleryAdapter.OnItemClickL
     CheckBox imSam;
     Button addActivity;
     Button takePicture;
+    CardView picture;
 
     private RecyclerView myRecyclerView;
     private GalleryAdapter myGalleryAdapter;
@@ -67,6 +72,8 @@ public class TabBarInfos extends Fragment implements GalleryAdapter.OnItemClickL
         setPhotosBar();
 
         setCheckBoxes();
+
+        setTitles();
 
         setButtons();
 
@@ -110,7 +117,7 @@ public class TabBarInfos extends Fragment implements GalleryAdapter.OnItemClickL
                 if(imHere.isChecked()) {
                     imSam.setVisibility(View.VISIBLE);
                 } else {
-                    imSam.setVisibility(View.INVISIBLE);
+                    imSam.setVisibility(View.GONE);
                     if(imSam.isChecked()) {
                         imSam.setChecked(false);
                     }
@@ -126,6 +133,14 @@ public class TabBarInfos extends Fragment implements GalleryAdapter.OnItemClickL
         this.infos.setMovementMethod(new ScrollingMovementMethod());
     }
 
+    private void setTitles() {
+        this.photosField = (TextView) this.mainV.findViewById(R.id.daily_picture);
+        this.actField = (TextView) this.mainV.findViewById(R.id.daily_activity);
+        this.picture = (CardView) this.mainV.findViewById(R.id.card_info_bar);
+        this.photosField.setOnClickListener(new OnClickDisplayFocuses(this.mainV.getContext(),myRecyclerView,null,this.photosField.getId()));
+        this.actField.setOnClickListener(new OnClickDisplayFocuses(this.mainV.getContext(),null,this.infos,this.actField.getId()));
+    }
+
     private void setPhotosBar() {
         //this.myGallery = (LinearLayout) this.mainV.findViewById(R.id.my_gallery_bar);
         myRecyclerView = (RecyclerView)this.mainV.findViewById(R.id.myrecyclerview);
@@ -136,11 +151,11 @@ public class TabBarInfos extends Fragment implements GalleryAdapter.OnItemClickL
         myRecyclerView.setLayoutManager(linearLayoutManager);
 
         displayImg = (ImageView) this.mainV.findViewById(R.id.hide_picture);
-        displayImg.setVisibility(View.INVISIBLE);
+        displayImg.setVisibility(View.GONE);
         displayImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayImg.setVisibility(View.INVISIBLE);
+                displayImg.setVisibility(View.GONE);
             }
         });
 

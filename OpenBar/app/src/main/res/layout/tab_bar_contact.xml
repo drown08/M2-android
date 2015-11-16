@@ -1,16 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">-->
+<android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/swipeRefreshLayoutBarContact"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
 
-<ImageView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:contentDescription="hello tab 2"
-    android:id="@+id/focus_contacts"
-    android:layout_centerVertical="true"
-    android:layout_centerHorizontal="true"
-    xmlns:android="http://schemas.android.com/apk/res/android" />
+
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:fillViewport="true"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/ln_contact_1"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Amis présents"
+            android:id="@+id/titre_contact_amis"
+            android:clickable="true"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/liste_contact_amis_present"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Autres personnes"
+            android:id="@+id/titre_contact_autre"
+            android:clickable="true"
+            android:layout_gravity="center_vertical" />
+
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/liste_contact_autre_present"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_weight="1" />
+
+
+    </LinearLayout>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>
+
+
 
 <!--</RelativeLayout>-->

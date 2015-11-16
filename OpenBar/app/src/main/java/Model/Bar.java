@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+
 /**
  * Created by Frappereau Olivier on 11/11/2015.
  */
@@ -7,11 +9,13 @@ public class Bar {
     private String nom;
     private String infos;
     private int logo;
+    private ArrayList<Contact> listePresents;
 
     public Bar (String n, String i, int l){
         this.nom=n;
         this.infos=i;
         this.logo=l;
+        this.listePresents = new ArrayList<Contact>();
     }
 
     public void setNom(String n){
@@ -36,6 +40,14 @@ public class Bar {
 
     public int getLogo() {
         return logo;
+    }
+
+    public void setListePresents(ArrayList<Contact> l) {
+        this.listePresents = l;
+    }
+
+    public ArrayList<Contact> getListePresents() {
+        return  this.listePresents;
     }
 
 }

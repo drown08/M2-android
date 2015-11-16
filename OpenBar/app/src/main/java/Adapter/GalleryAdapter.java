@@ -38,9 +38,11 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ItemHold
         this.myActivity=(BarActivity)this.context;
     }
 
+
     @Override
     public GalleryAdapter.ItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         CardView itemCardView = (CardView)layoutInflater.inflate(R.layout.layout_cardview,parent,false);
+        
         return new ItemHolder(itemCardView,this);
     }
 

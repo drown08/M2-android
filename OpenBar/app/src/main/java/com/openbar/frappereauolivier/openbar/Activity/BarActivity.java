@@ -11,9 +11,12 @@ import android.view.MenuItem;
 
 import com.openbar.frappereauolivier.openbar.R;
 
+import java.util.ArrayList;
+
 import Adapter.DetailBarAdapter;
 import Evenement.OnActionBarMenuSelected;
 import Model.Bar;
+import Model.Contact;
 
 public class BarActivity extends AppCompatActivity {
     Toolbar myToolbar;
@@ -37,6 +40,15 @@ public class BarActivity extends AppCompatActivity {
         String barName = this.getIntent().getStringExtra("bar"); //On réccupère l'id via la précédente activité
         //Puis simulation d'appelle à la BDD via CommunicationService pour réccupérer le bar en question
         myBar = new Bar("Test"+barName,"ppcdkd",R.drawable.options_test);
+        //TODO : Reccupere l'id du bar depuis la transaction et aller chercher la liste des gens présents par rapport au profil co
+        ArrayList<Contact> listeTmp = new ArrayList<Contact>();
+        listeTmp.add(new Contact(R.drawable.ic_add,"Pierre","Paul",true));
+        listeTmp.add(new Contact(R.drawable.options_test,"Jean","Yves",true));
+        listeTmp.add(new Contact(R.drawable.ic_plus_circle,"Zob","Bouz",false));
+        listeTmp.add(new Contact(R.drawable.ic_tick, "Raoul", "Cool", false));
+        listeTmp.add(new Contact(R.drawable.icone_refresh_48, "Dominique", "Biere", true));
+        listeTmp.add(new Contact(R.drawable.ic_add, "Rizet", "Salam", false));
+        myBar.setListePresents(listeTmp);
     }
 
     private void setSpecifyPresentation() {

@@ -138,6 +138,7 @@ public class FocusActivity extends AppCompatActivity {
                 }
                 Log.d("MethodCalled", String.valueOf(enable));
                 mySRL.setEnabled(enable);
+
             }
         });
     }
