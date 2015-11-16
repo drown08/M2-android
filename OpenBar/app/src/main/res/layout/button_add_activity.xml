@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <EditText
+        android:id="@+id/form_add_title_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="titre de l'activité"
+        />
+
+    <EditText
+        android:id="@+id/form_add_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="contenu de l'activité"
+        />
+
+    <Button
+        android:id="@+id/add_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ajouter activité"/>
+
+
+</LinearLayout>

@@ -1,22 +1,52 @@
 package FragmentBar;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.openbar.frappereauolivier.openbar.Activity.BarActivity;
 import com.openbar.frappereauolivier.openbar.R;
 
+import Adapter.GalleryAdapter;
+import Evenement.OnAddNewActivity;
+
 /**
  * Created by Frappereau Olivier on 15/11/2015.
  */
-public class TabBarInfos extends Fragment {
+public class TabBarInfos extends Fragment implements GalleryAdapter.OnItemClickListener {
     TextView infos;
     View mainV;
+    ImageView displayImg;
+    LinearLayout myDisplayingPicture;
+    CheckBox imHere;
+    CheckBox imSam;
+    Button addActivity;
+    Button takePicture;
+
+    private RecyclerView myRecyclerView;
+    private GalleryAdapter myGalleryAdapter;
+    private LinearLayout myGallery;
+    private LinearLayoutManager linearLayoutManager;
+    private GridLayoutManager gridLayoutManager;
+    private RecyclerView myMainRecyclerView;
 
     public  TabBarInfos() {
         super();
@@ -25,22 +55,139 @@ public class TabBarInfos extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         this.mainV = inflater.inflate(R.layout.tab_bar_infos,container,false);
-
         customTheView();
         return this.mainV;
+
     }
 
     private void customTheView() {
-        //this.infos = (TextView) container.findViewById(R.id.focus_infos);
-        //this.infos.setText(BarActivity.myBar.getNom());
-        //this.infos.setText("BOUDIN");
-        //Log.d("getView",this.infos.toString());
 
+        setInfosFocus();
+
+        setPhotosBar();
+
+        setCheckBoxes();
+
+        setButtons();
+
+    }
+
+    private void setButtons() {
+        this.addActivity = (Button) this.mainV.findViewById(R.id.add_bar_activity);
+        this.addActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog d = new Dialog(getContext());
+                d.setContentView(R.layout.button_add_activity);
+                d.setTitle("Add activity to the bar");
+                d.setCancelable(true);
+                EditText edit = (EditText) d.findViewById(R.id.form_add_activity);
+                EditText editName = (EditText) d.findViewById(R.id.form_add_title_activity);
+                Button b = (Button) d.findViewById(R.id.add_activity);
+                b.setOnClickListener(new OnAddNewActivity(d,edit,editName,infos));
+                d.show();
+            }
+        });
+        this.takePicture = (Button) this.mainV.findViewById(R.id.take_picture);
+        this.takePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent itent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                getActivity().startActivityForResult(itent,100);
+            }
+        });
+    }
+
+    private void setCheckBoxes() {
+        this.imHere = (CheckBox) this.mainV.findViewById(R.id.check_here);
+        this.imSam = (CheckBox) this.mainV.findViewById(R.id.check_sam);
+
+        this.imHere.setOnClickListener(new View.OnClickListener() {
+
+            //TODO : Voir la gestion de sam en bdd
+            @Override
+            public void onClick(View v) {
+                if(imHere.isChecked()) {
+                    imSam.setVisibility(View.VISIBLE);
+                } else {
+                    imSam.setVisibility(View.INVISIBLE);
+                    if(imSam.isChecked()) {
+                        imSam.setChecked(false);
+                    }
+                }
+
+            }
+        });
+    }
+
+    private void setInfosFocus () {
         this.infos = (TextView) this.mainV.findViewById(R.id.focus_infos);
-
-
-        //this.infos = (TextView) this.mainV;
         this.infos.setText(BarActivity.myBar.getNom());
+        this.infos.setMovementMethod(new ScrollingMovementMethod());
+    }
+
+    private void setPhotosBar() {
+        //this.myGallery = (LinearLayout) this.mainV.findViewById(R.id.my_gallery_bar);
+        myRecyclerView = (RecyclerView)this.mainV.findViewById(R.id.myrecyclerview);
+        linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
+        myGalleryAdapter = new GalleryAdapter(this);
+        myGalleryAdapter.setOnItemClickListener(this);
+        myRecyclerView.setAdapter(myGalleryAdapter);
+        myRecyclerView.setLayoutManager(linearLayoutManager);
+
+        displayImg = (ImageView) this.mainV.findViewById(R.id.hide_picture);
+        displayImg.setVisibility(View.INVISIBLE);
+        displayImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayImg.setVisibility(View.INVISIBLE);
+            }
+        });
+
+
+        prepareGallery();
+    }
+
+    private void prepareGallery() {
+        //String externakStorageDirectoryPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+       // String targetPath = externakStorageDirectoryPath + "/test/";
+        //String targetPath =
+        //Log.d("TestLink", targetPath);
+        //Toast.makeText(getContext(),targetPath,Toast.LENGTH_SHORT).show();
+       // File targetDirector = new File(targetPath);
+       // File[] files = targetDirector.listFiles();
+       // for(File file : files) {
+       //     Uri uri = Uri.fromFile(file);
+       //     myGalleryAdapter.add(myGalleryAdapter.getItemCount(),uri);
+       // }
+         //Uri uri = Uri.parse("https://pixabay.com/static/uploads/photo/2015/02/25/22/10/chicken-649572_640.jpg");
+        //TODO : reccuperer les images du jour du bar à la bien
+         /*Uri uri = Uri.parse("http://i.imgur.com/Pukv3zV.gif");
+        myGalleryAdapter.add(myGalleryAdapter.getItemCount(),uri);
+        uri = Uri.parse("http://i.imgur.com/RKchYn7.jpg");
+        myGalleryAdapter.add(myGalleryAdapter.getItemCount(),uri);
+        uri = Uri.parse("http://i.imgur.com/nuMMnwY.png");
+        myGalleryAdapter.add(myGalleryAdapter.getItemCount(),uri);*/
+        Uri uri = Uri.parse("android.resource://com.openbar.frappereauolivier.openbar/"+R.drawable.ic_tick);
+        myGalleryAdapter.add(myGalleryAdapter.getItemCount(),uri);
+        uri = Uri.parse("android.resource://com.openbar.frappereauolivier.openbar/"+R.drawable.ic_plus_circle);
+        myGalleryAdapter.add(myGalleryAdapter.getItemCount(),uri);
+        uri = Uri.parse("android.resource://com.openbar.frappereauolivier.openbar/"+R.drawable.ic_favorite_black_48dp);
+        myGalleryAdapter.add(myGalleryAdapter.getItemCount(),uri);
+        uri = Uri.parse("android.resource://com.openbar.frappereauolivier.openbar/"+ R.drawable.ic_add);
+        myGalleryAdapter.add(myGalleryAdapter.getItemCount(),uri);
+
+
+
+    }
+
+    @Override
+    public void onItemClick(GalleryAdapter.ItemHolder item, int position) {
+        String stringitemUri = item.getItemUri();
+        Uri uri = Uri.parse("android.resource://com.openbar.frappereauolivier.openbar/" + stringitemUri);
+        Toast.makeText(getContext(),stringitemUri,Toast.LENGTH_SHORT).show();
+        displayImg.setImageURI(uri);
+        displayImg.setVisibility(View.VISIBLE);
 
     }
 }
