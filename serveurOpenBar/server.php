@@ -40,12 +40,22 @@ if(isset($_GET)){
 					$requete = 'select * from bar';
 					ReturnResultFromDB($db,$requete);
 					break;
+				case'vPseudo':
+					$requete = "select id_user from user where pseudo_user ='".$_GET['pseudo']."'";
+					ReturnBooleanFromDB($db,$requete);
+					break;
+				case 'sign' :
+					ReturnInsertUserFromDB($db,$_GET['pseudo'],$_GET['mdp'],$_GET['mail']);
+					break;
+				case 'verifySign' :
+					ReturnVerifyLogin($db,$_GET['pseudo'],$_GET['mdp']);
+					break;
 				default:
 					# code...
 					break;
 			}
 		} else {
-			echo "caca : ".$_GET["ctrl"]." !!";
+			echo "bad controlleur : ".$_GET["ctrl"]." !!";
 		}
 	} else {
 		print_r($_GET);
@@ -71,6 +81,51 @@ function ReturnResultFromDB($db,$req) {
 	$rq->execute();
 	$result = $rq->fetchAll(PDO::FETCH_ASSOC);
 	echo (json_encode($result));
+}
+
+function ReturnBooleanFromDB($db,$req) {
+	$result = array();
+	$rq = $db->prepare($req);
+	$rq->execute();
+	$result = $rq->fetchAll(PDO::FETCH_ASSOC);
+	if(count($result) == 0){
+		echo "ok";
+	} else {
+		echo "not";
+	}
+}
+
+function ReturnInsertUserFromDB($db,$pseudo,$password,$mail) {
+	$req = $db->prepare('INSERT INTO user (pseudo_user, password_user, mail_user) VALUES (:pseudo, :password, :mail)');
+	$req->bindParam(':pseudo',$pseudo, PDO::PARAM_STR);
+	$req->bindParam(':password',$password, PDO::PARAM_STR);
+	$req->bindParam(':mail',$mail, PDO::PARAM_STR);
+	if($req->execute() !== TRUE){
+		var_dump($req->errorInfo());
+		echo "not";
+	} else {
+		echo "ok";
+	}
+}
+
+function ReturnVerifyLogin($db,$pseudo,$password) {
+	//Faille pseudo = pseudo -- ????
+	$result=array();
+	$req = $db->prepare('SELECT id_user FROM user  WHERE pseudo_user = :pseudo AND password_user = :password ');
+	$req->bindParam(':pseudo',$pseudo, PDO::PARAM_STR);
+	$req->bindParam(':password',$password, PDO::PARAM_STR);
+	if($req->execute() !== TRUE){
+		//var_dump($req->errorInfo());
+		echo "not";
+	} else {
+		$result = $req->fetchAll(PDO::FETCH_ASSOC);
+		if(count($result)>0){
+			echo (json_encode($result));	
+		} else {
+			echo "not";
+		}
+		
+	}
 }
 
 ?>

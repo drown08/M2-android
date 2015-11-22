@@ -11,6 +11,10 @@ public class Bar {
     private int logo;
     private ArrayList<Contact> listePresents;
 
+    public Bar() {
+        this.listePresents = new ArrayList<Contact>();
+    }
+
     public Bar (String n, String i, int l){
         this.nom=n;
         this.infos=i;

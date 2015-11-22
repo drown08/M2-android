@@ -18,8 +18,8 @@ public class CommunicationService {
     private  String reponse; //Useless avec ma solution mySend.get() (qui reçoit la rep) ???
     private static final String URL_SERVER = "http://10.0.2.2/serveurOpenBar/server.php";
 
-    public CommunicationService(AsyncTaskResponse delegate, Activity activity, Boolean show) {
-        mySender = new AsyncRequestServer(delegate,activity,show);
+    public CommunicationService(AsyncTaskResponse delegate, Activity activity, Boolean show, int flag) {
+        mySender = new AsyncRequestServer(delegate,activity,show,flag);
         params = new LinkedHashMap();
         reponse = "riendutoutinit";
     }

@@ -5,5 +5,6 @@ package CommunicationServeur;
  */
 public interface AsyncTaskResponse {
     //Permet de réccuperer la réponse asynchrone
-    void processFinish(String output);
+    //void processFinish(String output);
+    void processFinish(String output,int flag);
 }

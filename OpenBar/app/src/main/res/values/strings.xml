@@ -30,4 +30,13 @@
     <string name="title_activity_bar">BarActivity</string>
     <string name="title_activity_add_bar_map">AddBarMap</string>
     <string name="title_activity_profil">ProfilActivity</string>
+    <string name="fill_correctly_field">Please fill fields correctly</string>
+    <string name="verify_pseudo">verify the pseudo..</string>
+    <string name="already_sign">You are already sign</string>
+    <string name="checking">Cheking...</string>
+    <string name="pseudo_already_use">Pseudo already used. Try an another</string>
+    <string name="sign_done">Signup successfull ! Connexion...</string>
+    <string name="sign_undo">Signup don't work ! Database is shutdown.</string>
+    <string name="connect_undo">An error with pass or login. Try again</string>
+    <string name="my_bars">My bars</string>
 </resources>

@@ -11,6 +11,10 @@ public class Contact {
     private String prenom;
     private Bar place;
 
+    public Contact() {
+        this.isFriend = false;
+    }
+
     public Contact(int logo, String nom, String prenom) {
         this.refImg = logo;
         this.nom = nom;

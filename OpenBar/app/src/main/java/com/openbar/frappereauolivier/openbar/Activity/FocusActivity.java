@@ -15,23 +15,31 @@ import android.view.MenuItem;
 
 import com.openbar.frappereauolivier.openbar.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 import Adapter.BarAdapter;
+import CommunicationServeur.AsyncTaskResponse;
+import CommunicationServeur.CommunicationService;
 import Evenement.OnActionBarMenuSelected;
 import Evenement.OnClickAddBarFAB;
 import Evenement.OnRefreshListBar;
 import Model.Bar;
+import Model.Contact;
 
-public class FocusActivity extends AppCompatActivity {
-    Toolbar myToolbar;
-    RecyclerView recListBar;
-   public BarAdapter barAdapter;
-    ArrayList<Bar> myBars;
-    FloatingActionButton myFABAddBar;
-    FloatingActionButton myFABMiniAddBar1;
-    FloatingActionButton myFABMiniAddBar2;
-    SwipeRefreshLayout mySRL;
+public class FocusActivity extends AppCompatActivity implements AsyncTaskResponse {
+    public Toolbar myToolbar;
+    public RecyclerView recListBar;
+    public BarAdapter barAdapter;
+    public ArrayList<Bar> myBars;
+    public FloatingActionButton myFABAddBar;
+    public FloatingActionButton myFABMiniAddBar1;
+    public FloatingActionButton myFABMiniAddBar2;
+    public SwipeRefreshLayout mySRL;
+    public Contact currentUser;
 
 //TODO : Installer et utiliser ActionBarSherlock ?
     @Override
@@ -69,12 +77,30 @@ public class FocusActivity extends AppCompatActivity {
     }
 
     private void setSpecifyPresentation() {
+
+        setCurrentUser();
+
         setToolBarView();
 
         setListOfBarView();
 
         setFABView();
 
+    }
+
+    private void setCurrentUser() {
+        //1. Réccuppération de l'id depuis la connexion
+        if(this.getIntent().getStringExtra("user")!=null) {
+         String id = this.getIntent().getStringExtra("user");
+            //2. Réccuppération en bdd du JSON user
+            CommunicationService getContact = new CommunicationService(this,this,false,1);
+            getContact.addParams("ctrl","getCurrentUser");
+            getContact.addParams("id",id);
+            getContact.sendToServer();
+            getContact.flush();
+            //3. Bind du JSON avec un objet Contact
+        }
+        //TODO : else : Renvoyer sur form inscription.
     }
 
     private void setFABView() {
@@ -97,27 +123,40 @@ public class FocusActivity extends AppCompatActivity {
         setSupportActionBar(this.myToolbar);
         // Get a support ActionBar corresponding to this toolbar
         ActionBar ab = getSupportActionBar();
-        ab.setTitle("Mes bars");
+        ab.setTitle(R.string.my_bars);
         // Enable the Up (back P/R à l'activité parente) button
         //ab.setDisplayHomeAsUpEnabled(true);
 
     }
 
     private void setListOfBarView(){
-        recListBar = (RecyclerView) findViewById(R.id.cardListBar);
-        recListBar.setHasFixedSize(true);
+        this.recListBar = (RecyclerView) findViewById(R.id.cardListBar);
+        this.recListBar.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recListBar.setLayoutManager(llm);
+        this.recListBar.setLayoutManager(llm);
         //Call Service to getBars
-        myBars = setListBar();
-        barAdapter = new BarAdapter(myBars,this);
-        recListBar.setAdapter(barAdapter);
-        recListBar.setItemAnimator(new DefaultItemAnimator());
+        setListBar();
+        //this.myBars = setListBar();
+    }
+
+    private void setListBar() {
+        //TODO : Service qui appelle la communication Serveur avec comme info UserPseudo
+        CommunicationService getBarsOfUser = new CommunicationService(this,this,true,2);
+        getBarsOfUser.addParams("ctrl","getBarOfCurrentUser");
+        getBarsOfUser.addParams("id_user", String.valueOf(this.currentUser.getRefImg()));
+        getBarsOfUser.sendToServer();
+        getBarsOfUser.flush();
+    }
+
+    public void setListAdapterBar() {
+        this.barAdapter = new BarAdapter(myBars,this);
+        this.recListBar.setAdapter(barAdapter);
+        this.recListBar.setItemAnimator(new DefaultItemAnimator());
 
         //Set refresh action to the liste
-        mySRL = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
-        mySRL.setOnRefreshListener(new OnRefreshListBar(this,mySRL));
+        this.mySRL = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        this.mySRL.setOnRefreshListener(new OnRefreshListBar(this, this.mySRL));
 
         //Adjust when refresh action is available
         //recListBar.addOnScrollListener(new OnScrollAction(this,mySRL,recListBar));
@@ -126,7 +165,7 @@ public class FocusActivity extends AppCompatActivity {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 //super.onScrolled(recyclerView, dx, dy);
                 boolean enable = false;
-                if(recListBar != null && recListBar.getChildCount() > 0){
+                if (recListBar != null && recListBar.getChildCount() > 0) {
                     // check if the first item of the list is visible
                     //boolean firstItemVisible = true;
                     //boolean firstItemVisible = recListBar.() == 0;
@@ -143,27 +182,49 @@ public class FocusActivity extends AppCompatActivity {
         });
     }
 
-    private ArrayList<Bar> setListBar() {
-        ArrayList<Bar> tmp = new ArrayList<Bar>();
-        //TODO : Service qui appelle la communication Serveur avec comme info UserPseudo
-        // Et comme serviceDuServeur : donne moi la liste des bars de UserPseudo
-        // Dans ce module : Il faut arriver à faire une couche en plus  pour désancoder le JSON et restituer un objet faciel à manipuler
-        // JSONReponse = CommunicationService.getReponse()
-        //Puis on parse la iste result et on créer une liste de newBar et après on retourne la liste
-        //Step1 : Faire implémenter cette classe de AsyncTaskResponse
-        //Step2 : Il faut aussi une progress bar qui tourne en attendant le callback
-        tmp.add(new Bar("Bar 1","Happy Hours",R.drawable.options_test));
-        tmp.add(new Bar("Bar 2","Diffuse match rugby",R.drawable.options_test));
-        tmp.add(new Bar("Bar 3","Rien",R.drawable.options_test));
-        tmp.add(new Bar("Bar 4","3 amis ici",R.drawable.options_test));
-        tmp.add(new Bar("Bar 5","Ajouter hier",R.drawable.options_test));
-        tmp.add(new Bar("Bar 6", "Folie !", R.drawable.options_test));
-        tmp.add(new Bar("Bar 7","Diffuse match basket",R.drawable.options_test));
-        tmp.add(new Bar("Bar 8","Diffuse match Hockey",R.drawable.options_test));
-        return tmp;
-    }
-
     public Bar getBarByRange(int range) {
         return this.myBars.get(range);
+    }
+
+    @Override
+    public void processFinish(String output, int flag) {
+        switch (flag) {
+            case 1 : //Récuppération du current utilisateur
+                Contact contact = new Contact();
+                try {
+                        JSONArray result = new JSONArray(output);
+                        for (int i = 0; i < result.length(); i++){
+                            JSONObject row = result.getJSONObject(i);
+                            contact.setNom(row.getString("pseudo_user"));
+                            contact.setPrenom(row.getString("pseudo_user") + "(prenom)");
+                            //TODO : Voir comment faire pour les images
+                            //contact.setRefImg(R.drawable.common_google_signin_btn_icon_dark_pressed);
+                            contact.setRefImg(row.getInt("id_user"));
+                        }
+                    this.currentUser = contact;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 2 : //Réccupération des bars du current user
+                ArrayList<Bar> tmp = new ArrayList<Bar>();
+                try {
+                    JSONArray result = new JSONArray(output);
+                    for(int i = 0; i < result.length(); i++) {
+                        JSONObject row = result.getJSONObject(i);
+                        Bar barTmp = new Bar();
+                        //TODO : Faire la même côté serveur et modèle pour faire les tests
+                        barTmp.setNom(row.getString("name_bar"));
+                        barTmp.setInfos(row.getString("info_bar"));
+                        barTmp.setLogo(R.drawable.common_google_signin_btn_icon_light_normal);
+                        tmp.add(barTmp);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                this.myBars =  tmp;
+                setListAdapterBar();
+                break;
+        }
     }
 }
