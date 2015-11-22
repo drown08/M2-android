@@ -1,6 +1,12 @@
 <?php
 // if text data was posted
-
+try{
+$db = new PDO('mysql:host=localhost;dbname=bd_open_bar','root','');
+}
+catch(Exception $e)
+{
+	die('Erreur : '.$e->getMessage());
+}
 require_once('ThreadMail.php');
 //$Get_url = "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URl'];
 //echo $Get_url;
@@ -25,7 +31,15 @@ if(isset($_GET)){
 						echo "Thread of client ".$_GET["pseudo"]."executed<br>";
 					}*/
 					break;
-				
+
+				case 'users':
+					$requete= 'select * from user';
+					ReturnResultFromDB($db,$requete); 
+					break;
+				case 'bars':
+					$requete = 'select * from bar';
+					ReturnResultFromDB($db,$requete);
+					break;
 				default:
 					# code...
 					break;
@@ -49,6 +63,14 @@ if(isset($_GET)){
         $pass[] = $alphabet[$n];
     }
     return implode($pass); 
+}
+
+function ReturnResultFromDB($db,$req) {
+	$result = array();
+	$rq = $db->prepare($req);
+	$rq->execute();
+	$result = $rq->fetchAll(PDO::FETCH_ASSOC);
+	echo (json_encode($result));
 }
 
 ?>

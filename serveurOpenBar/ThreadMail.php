@@ -21,13 +21,26 @@ class ThreadMail {
 	}
 
 	public function run() {
-		ini_set('SMTP',"smtp.univ-montp2.fr"); //A la fac
+		//ini_set('SMTP',"smtp.univ-montp2.fr"); //A la fac
+		ini_set('SMTP',"smtp.orange.fr"); //Chez moi
 		$this->sendMail();
 	}
 
 	private function sendMail() {
 		if(mail($this->to,$this->subject,$this->msg,$this->headers)){
-			echo "send";
+			try{
+				$db = new PDO('mysql:host=localhost;dbname=bd_open_bar','root','');
+				$result = array();
+				$req = "select * from user";
+				$rq = $db->prepare($req);
+				$rq->execute();
+				$result = $rq->fetchAll(PDO::FETCH_ASSOC);
+				echo (json_encode($result));
+				}
+				catch(Exception $e)
+				{
+					die('Erreur : '.$e->getMessage());
+				}
 		} else {
 			echo "no send";
 		}
