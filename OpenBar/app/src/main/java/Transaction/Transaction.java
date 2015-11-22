@@ -1,7 +1,9 @@
 package Transaction;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -11,14 +13,24 @@ import java.util.List;
  */
 public class Transaction {
     private Intent myTransaction;
-    private Activity myActivity;
+    private Context myActivity;
+    private Activity myActivityForFinish;
     private Class<?> cls;
 
     //Appeler cette méthode lorsqu'on souhaite changer d'activité : Création d'une nouvelle transaction entre activités
     public Transaction(Activity a, Class<?> c) {
         this.myTransaction = new Intent();
-        this.myActivity = a;
+        this.myActivity = (Context) a;
+        this.myActivityForFinish = a;
         this.cls = c;
+        setClassIntent();
+    }
+
+    public Transaction(Context c, Class<?> cc) {
+        this.myTransaction = new Intent();
+        this.myActivity = c;
+        this.myActivityForFinish = null;
+        this.cls = cc;
         setClassIntent();
     }
 
@@ -47,7 +59,11 @@ public class Transaction {
 
     //Lancer l'activité et détruire la précédente
     public void exitAndRun() {
-        this.myActivity.finish();
+        if(this.myActivityForFinish != null) {
+            this.myActivityForFinish.finish();
+        } else {
+            Toast.makeText(this.myActivity,"Can't finish "+this.getClass().getName()+" (no instance of activity in fragment)",Toast.LENGTH_LONG).show();
+        }
         this.myActivity.startActivity(this.myTransaction);
     }
 

@@ -147,6 +147,11 @@ public class FocusActivity extends AppCompatActivity {
         ArrayList<Bar> tmp = new ArrayList<Bar>();
         //TODO : Service qui appelle la communication Serveur avec comme info UserPseudo
         // Et comme serviceDuServeur : donne moi la liste des bars de UserPseudo
+        // Dans ce module : Il faut arriver à faire une couche en plus  pour désancoder le JSON et restituer un objet faciel à manipuler
+        // JSONReponse = CommunicationService.getReponse()
+        //Puis on parse la iste result et on créer une liste de newBar et après on retourne la liste
+        //Step1 : Faire implémenter cette classe de AsyncTaskResponse
+        //Step2 : Il faut aussi une progress bar qui tourne en attendant le callback
         tmp.add(new Bar("Bar 1","Happy Hours",R.drawable.options_test));
         tmp.add(new Bar("Bar 2","Diffuse match rugby",R.drawable.options_test));
         tmp.add(new Bar("Bar 3","Rien",R.drawable.options_test));

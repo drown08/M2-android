@@ -1,5 +1,7 @@
 package CommunicationServeur;
 
+import android.app.Activity;
+
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -16,8 +18,8 @@ public class CommunicationService {
     private  String reponse; //Useless avec ma solution mySend.get() (qui reçoit la rep) ???
     private static final String URL_SERVER = "http://10.0.2.2/serveurOpenBar/server.php";
 
-    public CommunicationService(AsyncTaskResponse delegate) {
-        mySender = new AsyncRequestServer(delegate);
+    public CommunicationService(AsyncTaskResponse delegate, Activity activity, Boolean show) {
+        mySender = new AsyncRequestServer(delegate,activity,show);
         params = new LinkedHashMap();
         reponse = "riendutoutinit";
     }

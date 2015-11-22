@@ -1,5 +1,7 @@
 package CommunicationServeur;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -9,19 +11,33 @@ import android.util.Log;
 public class AsyncRequestServer extends AsyncTask<String,Void,String> {
 
     private AsyncTaskResponse delegate = null;
+    private Activity myActivity;
     private ConnectionServer myServer;
     private String myReponse;
+    private ProgressDialog tmp;
+    private boolean showProgressDialog;
 
-    public AsyncRequestServer(AsyncTaskResponse delegate) {
+    public AsyncRequestServer(AsyncTaskResponse delegate, Activity activity, Boolean show) {
         myServer = new ConnectionServer();
         this.myReponse="";
+        this.myActivity = activity;
         this.delegate = delegate;
+        this.showProgressDialog = show;
     }
 
-    /*@Override
+    @Override
     protected void onPreExecute() {
-        setProgressBarIndeterminateVisibilty(true);
-    }*/
+        if(showProgressDialog) {
+            this.tmp = new ProgressDialog(this.myActivity);
+            this.tmp.setMessage("Wait..");
+            this.tmp.setCancelable(false);
+            this.tmp.setIndeterminate(false);
+            this.tmp.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            this.tmp.show();
+        }
+
+       // setProgressBarIndeterminateVisibilty(true);
+    }
 
     @Override
     protected String doInBackground(String... params) {
@@ -33,6 +49,9 @@ public class AsyncRequestServer extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String reponse) {
+        if(this.showProgressDialog){
+            this.tmp.dismiss();
+        }
         delegate.processFinish(reponse);
         //setMyReponse(reponse);
     }

@@ -12,6 +12,10 @@ import com.openbar.frappereauolivier.openbar.Activity.ForgetMailActivity;
 import com.openbar.frappereauolivier.openbar.Activity.InscriptionActivity;
 import com.openbar.frappereauolivier.openbar.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -105,7 +109,7 @@ public class OnClickEventInscriptionConnexionForgot implements View.OnClickListe
                 boolean goSend = myValidationForgot.validate();
                 if(goSend) {
                     Toast.makeText(myActivity.getApplicationContext(), "Ok, verification pseudo -> mail...", Toast.LENGTH_SHORT).show();
-                    CommunicationService commTmp = new CommunicationService(this);
+                    CommunicationService commTmp = new CommunicationService(this,this.myActivity,true);
                     commTmp.addParams("ctrl", "mail");
                     commTmp.addParams("pseudo", logForgotPass.getText().toString());
                     commTmp.addParams("mail", mailForgotPass.getText().toString());
@@ -126,10 +130,30 @@ public class OnClickEventInscriptionConnexionForgot implements View.OnClickListe
 
     @Override
     public void processFinish(String output) {
+
+        //Ici réccuperer le output dans un ENCODEJSON pour traiter facilement les résultats
          if (output.equals("send")) {
-            Toast.makeText(myActivity.getApplicationContext(),"GOOD",Toast.LENGTH_LONG).show();
+             //JsonReponse rep = new JsonReponse(output);
+             //ArrayList<String> tmp = rep.getElements("truck");
+             //ArrayList<String> tmp2 = rep.getElements("machin");
+            // String all = tmp.get(0)+tmp2.get(0);
+             String all = "cood";
+            Toast.makeText(myActivity.getApplicationContext(),all,Toast.LENGTH_LONG).show();
           } else {
-            Toast.makeText(myActivity.getApplicationContext(),output,Toast.LENGTH_LONG).show();
+             String tt = "";
+             try {
+                 JSONArray result = new JSONArray(output);
+                 for (int i = 0; i < result.length(); i++){
+                     JSONObject row = result.getJSONObject(i);
+                     tt += " "+row.getString("pseudo_user");
+                     tt += " "+row.getString("mail_user");
+                     tt += " "+row.getString("photo_user");
+
+                 }
+             } catch (JSONException e) {
+                 e.printStackTrace();
+             }
+             Toast.makeText(myActivity.getApplicationContext(),tt,Toast.LENGTH_LONG).show();
          }
 
     }

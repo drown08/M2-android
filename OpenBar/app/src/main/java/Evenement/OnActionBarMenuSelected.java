@@ -5,6 +5,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.openbar.frappereauolivier.openbar.Activity.ConnexionActivity;
+import com.openbar.frappereauolivier.openbar.Activity.ProfilActivity;
 import com.openbar.frappereauolivier.openbar.R;
 
 import Transaction.Transaction;
@@ -32,6 +33,8 @@ public class OnActionBarMenuSelected {
 
             case R.id.action_favorite : // CLIQUE SUR PROFIL
                 Toast.makeText(this.myActivity.getApplicationContext(),"Profil",Toast.LENGTH_SHORT).show();
+                Transaction goProfil = new Transaction(this.myActivity, ProfilActivity.class);
+                goProfil.runWithoutExit();
                 return true;
 
             case R.id.action_refresh : // CLIQUE SUR REFRESH

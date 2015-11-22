@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.openbar.frappereauolivier.openbar.Activity.BarActivity;
@@ -35,6 +36,7 @@ public class TabBarContact extends Fragment {
     public LinearLayoutManager llmo;
     public ContactAdapterViewBar adapteOthers;
     public SwipeRefreshLayout srl;
+    public ScrollView sv;
 
 
     public TabBarContact() {super();}
@@ -50,6 +52,11 @@ public class TabBarContact extends Fragment {
         setTitles();
         setListes();
         setSwipe();
+        setScrollView();
+    }
+
+    private void setScrollView() {
+        this.sv = (ScrollView) this.mainV.findViewById(R.id.scroll_view_contact_bar);
     }
 
     private void setSwipe() {
@@ -77,13 +84,22 @@ public class TabBarContact extends Fragment {
         llmo = new LinearLayoutManager(this.mainV.getContext());
 
 
+
+
         manageFriend.setLayoutManager(llmf);
         manageOthers.setLayoutManager(llmo);
+
+        //manageFriend.setNestedScrollingEnabled(true);
+        //manageOthers.setNestedScrollingEnabled(true);
+        //manageFriend.setHasFixedSize(true);
+        //manageOthers.setHasFixedSize(true);
+
 
         dispatchingContact();
 
         manageFriend.setAdapter(adapteFriends);
         manageOthers.setAdapter(adapteOthers);
+
 
     }
 

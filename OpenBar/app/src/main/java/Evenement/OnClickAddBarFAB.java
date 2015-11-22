@@ -5,7 +5,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 import android.widget.Toast;
 
+import com.openbar.frappereauolivier.openbar.Activity.AddBarMapActivity;
 import com.openbar.frappereauolivier.openbar.R;
+
+import Transaction.Transaction;
 
 /**
  * Created by Frappereau Olivier on 14/11/2015.
@@ -49,6 +52,8 @@ public class OnClickAddBarFAB implements View.OnClickListener {
                 break;
             case R.id.fab_mini_2 :
                 Toast.makeText(this.myActivity.getApplicationContext(),"Via locate",Toast.LENGTH_SHORT).show();
+                Transaction transaction = new Transaction(this.myActivity, AddBarMapActivity.class);
+                transaction.runWithoutExit();
                 break;
 
         }
