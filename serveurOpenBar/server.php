@@ -1,5 +1,6 @@
 <?php
 // if text data was posted
+$GOOGLE_API_KEY="AIzaSyCceG-_79VEXIiPTUpLx6ssKWsCFbxfZfg";
 try{
 $db = new PDO('mysql:host=localhost;dbname=bd_open_bar','root','');
 }
@@ -49,6 +50,13 @@ if(isset($_GET)){
 					break;
 				case 'verifySign' :
 					ReturnVerifyLogin($db,$_GET['pseudo'],$_GET['mdp']);
+					break;
+				case 'addKey':
+					AddUserToken($db,$_GET['token_user'],$_GET['id_user']);
+					break;
+				case 'getKey' :
+					$token = GetTokenByUserId($db,$_GET['id_user']);
+					GCMPushMessage($token,$GOOGLE_API_KEY);
 					break;
 				default:
 					# code...
@@ -126,6 +134,104 @@ function ReturnVerifyLogin($db,$pseudo,$password) {
 		}
 		
 	}
+}
+
+function AddUserToken($db,$token,$id_user) {
+	$result=array();
+	$requete = $db->prepare("INSERT INTO gcm_ids (gcm_token,fk_user_id) VALUES (:token,:id)");
+	$requete->bindParam(':token',$token,PDO::PARAM_STR);
+	$requete->bindParam(':id',$id_user,PDO::PARAM_INT);
+	if($requete->execute() !== TRUE){
+		var_dump($requete->errorInfo());
+		echo "not";
+	} else {
+		echo "ok";
+	}
+}
+
+function GetTokenByUserId($db,$id_user) {
+	$result=array();
+	$requete = $db->prepare("SELECT t.gcm_token FROM gcm_ids t WHERE t.fk_user_id = :id");
+	$requete->bindParam(":id",$id_user);
+	if($requete->execute() !== TRUE){
+		//var_dump($req->errorInfo());
+		echo "not";
+	} else {
+		$result = $requete->fetchAll(PDO::FETCH_ASSOC);
+		if(count($result)>0){
+			echo "ok";
+			 return $result[0];	
+		} else {
+			echo "not";
+			return array();
+		}
+		
+	}
+
+}
+
+function GCMPushMessage($token,$api_key){
+	$url='https://gcm-http.googleapis.com/gcm/send';
+	$deviceId = setDevices($token);
+	$title = "A Google Push Test";
+	$msg = "Oh my gad ! I've done my test that's all folks !";
+	send($url,$deviceId,$api_key,$title,$msg);
+	echo "fuck";
+}
+
+function setDevices($token) {
+	if(is_array($token)) {
+		return $token;
+	} else {
+		return array($token);
+	}
+}
+
+function send($url,$deviceId,$api_key,$title,$msg, $collapse_key=null,$time_to_live=null){
+	if(!is_array($deviceId) || count($deviceId) == 0) {
+		echo "NO device set";
+		return;
+	}
+	if(strlen($api_key) < 8) {
+		echo "Server API Key not set";
+		return;
+	}
+	$fields = array(
+		'registrations_id' => $deviceId,
+		'data' => array("message" => $msg,
+						"title" => $title)
+	);
+	if($time_to_live!=null){
+		$fields['time_to_live'] = $time_to_live;
+	}
+	if($collapse_key!=null){
+		$fields['collapse_key'] = $collapse_key;
+	}
+	$headers = array(
+		'Authorization: key='.$api_key,
+		'Content-Type: application/json'
+	);
+	//On ouvre connection
+	$connex = curl_init();
+	//On set l'url
+	curl_setopt($connex, CURLOPT_URL, $url);
+	//On set les options et confi d'envoi
+	curl_setopt($connex, CURLOPT_POST, true);
+	curl_setopt($connex, CURLOPT_HTTPHEADER, $headers);
+	curl_setopt($connex, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($connex, CURLOPT_POSTFIELDS, json_encode($fields));
+	//Suppression pb avec certification HTTP
+	curl_setopt($connex, CURLOPT_SSL_VERIFYHOST, false);
+	curl_setopt($connex, CURLOPT_SSL_VERIFYPEER, false);
+	//Envoi de la rq post
+	echo "coucou";
+	$result = curl_exec($connex);
+	echo "lol";
+	//Close connection
+	curl_close($connex);
+	echo "result";
+	echo "result :".$result;
+	return;
 }
 
 ?>
