@@ -68,7 +68,7 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
 
     public void undoRemove(Bar b, int position) {
         this.barList.add(position, b);
-        notifyItemChanged(position, b);
+        notifyItemInserted(position);
     }
 
     public void updateBar(int position,Bar bar) {
@@ -77,8 +77,12 @@ public class BarAdapter extends RecyclerView.Adapter<BarAdapter.BarViewHolder> {
     }
 
     public void UPBarList(ArrayList<Bar> l) {
-        this.barList = l ;
-        notifyDataSetChanged();
+        this.barList = new ArrayList<Bar>(l);
+        //this.barList = l ;
+        //Toast.makeText(this.myActivity.getApplicationContext(),"TAILLE-LISTE-BAR AV "+String.valueOf(l.size()),Toast.LENGTH_SHORT;
+        notifyItemRangeChanged(0, l.size());
+        //Toast.makeText(this.myActivity.getApplicationContext(), "TAILLE-LISTE-BAR AP " + String.valueOf(l.size()), Toast.LENGTH_SHORT);
+        //notifyDataSetChanged();
     }
 
     public static class BarViewHolder extends RecyclerView.ViewHolder  {

@@ -1,6 +1,7 @@
 package FragmentBar;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,10 +26,12 @@ import android.widget.Toast;
 
 import com.openbar.frappereauolivier.openbar.Activity.BarActivity;
 import com.openbar.frappereauolivier.openbar.R;
+import com.squareup.picasso.Picasso;
 
 import Adapter.GalleryAdapter;
 import Evenement.OnAddNewActivity;
 import Evenement.OnClickDisplayFocuses;
+import ItemViewHolder.PhotoBarViewHolder;
 
 /**
  * Created by Frappereau Olivier on 15/11/2015.
@@ -114,11 +117,11 @@ public class TabBarInfos extends Fragment implements GalleryAdapter.OnItemClickL
             //TODO : Voir la gestion de sam en bdd
             @Override
             public void onClick(View v) {
-                if(imHere.isChecked()) {
+                if (imHere.isChecked()) {
                     imSam.setVisibility(View.VISIBLE);
                 } else {
                     imSam.setVisibility(View.GONE);
-                    if(imSam.isChecked()) {
+                    if (imSam.isChecked()) {
                         imSam.setChecked(false);
                     }
                 }
@@ -138,7 +141,7 @@ public class TabBarInfos extends Fragment implements GalleryAdapter.OnItemClickL
         this.actField = (TextView) this.mainV.findViewById(R.id.daily_activity);
         this.picture = (CardView) this.mainV.findViewById(R.id.card_info_bar);
         this.photosField.setOnClickListener(new OnClickDisplayFocuses(this.mainV.getContext(),myRecyclerView,null,this.photosField.getId()));
-        this.actField.setOnClickListener(new OnClickDisplayFocuses(this.mainV.getContext(),null,this.infos,this.actField.getId()));
+        this.actField.setOnClickListener(new OnClickDisplayFocuses(this.mainV.getContext(), null, this.infos, this.actField.getId()));
     }
 
     private void setPhotosBar() {
@@ -197,12 +200,22 @@ public class TabBarInfos extends Fragment implements GalleryAdapter.OnItemClickL
     }
 
     @Override
-    public void onItemClick(GalleryAdapter.ItemHolder item, int position) {
+    public void onItemClick(PhotoBarViewHolder item, int position) {
         String stringitemUri = item.getItemUri();
         Uri uri = Uri.parse("android.resource://com.openbar.frappereauolivier.openbar/" + stringitemUri);
         Toast.makeText(getContext(),stringitemUri,Toast.LENGTH_SHORT).show();
-        displayImg.setImageURI(uri);
+
+        if(uri != null) {
+            Context context = displayImg.getContext();
+            Picasso.with(context)
+                    .load(uri)
+                    .into(displayImg);
+
+        }
+
+
         displayImg.setVisibility(View.VISIBLE);
+
 
     }
 }

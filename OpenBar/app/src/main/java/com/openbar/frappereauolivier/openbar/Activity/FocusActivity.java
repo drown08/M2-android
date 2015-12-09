@@ -135,7 +135,7 @@ public class FocusActivity extends AppCompatActivity implements AsyncTaskRespons
 
     private void setListOfBarView(){
         this.recListBar = (RecyclerView) findViewById(R.id.cardListBar);
-        this.recListBar.setHasFixedSize(true);
+        //this.recListBar.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         this.recListBar.setLayoutManager(llm);

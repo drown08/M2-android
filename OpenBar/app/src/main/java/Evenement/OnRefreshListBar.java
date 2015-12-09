@@ -2,6 +2,7 @@ package Evenement;
 
 import android.app.Activity;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.openbar.frappereauolivier.openbar.Activity.FocusActivity;
@@ -45,14 +46,24 @@ public class OnRefreshListBar implements SwipeRefreshLayout.OnRefreshListener {
         tmp.add(new Bar("Bar 6", "Folie ! Ref", R.drawable.options_test));
         tmp.add(new Bar("Bar 7","Diffuse match basket Ref",R.drawable.options_test));
         tmp.add(new Bar("Bar 8","Diffuse match Hockey Ref",R.drawable.options_test));
+
+       // CommunicationService getBarsOfUser = new CommunicationService(this.myActivity,this.myActivity,true,2);
+       // getBarsOfUser.addParams("ctrl", "bars");//getBarOfCurrentUser à remplacer à la place
+       // getBarsOfUser.addParams("id_user", String.valueOf(this.myActivity.currentUser.getRefImg()));
+       // getBarsOfUser.sendToServer();
+       // getBarsOfUser.flush();
         // Load complete
+        Log.d("TAILLE-LIST-BAR-AV", String.valueOf(this.myActivity.myBars.size()));
         onItemsLoadComplete(tmp);
+        Log.d("TAILLE-LIST-BAR-AV", String.valueOf(this.myActivity.myBars.size()));
     }
 
    private void onItemsLoadComplete(ArrayList<Bar> lb) {
         // Update the adapter and notify data set changed
         // ...
+
         this.myActivity.barAdapter.UPBarList(lb);
+//       this.myActivity.barAdapter.notify();
         // Stop refresh animation
         this.focusElement.setRefreshing(false);
        Toast.makeText(this.myActivity.getApplicationContext(), "Refreshing done", Toast.LENGTH_SHORT).show();
