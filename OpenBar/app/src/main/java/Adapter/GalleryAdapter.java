@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.openbar.frappereauolivier.openbar.Activity.BarActivity;
 import com.openbar.frappereauolivier.openbar.R;
+import com.squareup.picasso.Picasso;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -52,13 +53,18 @@ public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.ItemHold
         holder.setItemUri(targetUri.getPath());
 
         if(targetUri != null) {
-            try {
+            /*try {
                 //!Attention
                 //Pas sur que c'est un load propre ici
                 holder.setImageView(loadScaledBitmap(targetUri));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
-            }
+            }*/
+            Context context = holder.imageView.getContext();
+            Picasso.with(context)
+                    .load(targetUri)
+                    .into(holder.imageView);
+
         }
     }
 

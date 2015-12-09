@@ -28,12 +28,19 @@ public class RegistrationIntentService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        InstanceID instanceID=null;
         try{
             //Si jamais problème de synchro lors de pultiples refresh, il faut être synchro avant d'executer cette section.
             synchronized (TAG) {
-                InstanceID instanceID = InstanceID.getInstance(this);
+                instanceID = InstanceID.getInstance(this);
                 String token = instanceID.getToken(getString(R.string.google_id_app), GoogleCloudMessaging.INSTANCE_ID_SCOPE,null);
-                Log.i(TAG,"GCM Registration token"+token);
+               // String token = instanceID.getToken("332561504331", GoogleCloudMessaging.INSTANCE_ID_SCOPE,null);
+                Log.i(TAG, "coucou av : " + instanceID.getId());
+                Thread.sleep(5000);
+                //String token = instanceID.getToken(getString(R.string.google_id_app), "GCM");
+
+                //Log.i(TAG,"GCM Registration token"+token);
+
 
                 //Si l'opération a déjà était faite, pas la peine de réitérer
                 if(!sharedPreferences.getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER,false))
@@ -45,7 +52,7 @@ public class RegistrationIntentService extends IntentService {
         } catch(Exception e) {
             Log.d(TAG, "Failed to complete token refresh", e);
         }
-
+        Log.i(TAG, "coucou ap : " + instanceID.getId());
         Intent registrationComplete = new Intent(QuickstartPreferences.REGISTRATION_COMPLETE);
         LocalBroadcastManager.getInstance(this).sendBroadcast(registrationComplete);
 
@@ -54,7 +61,8 @@ public class RegistrationIntentService extends IntentService {
     private void sendRegistrationToServer(String token) {
        // CommunicationService sendToken = new CommunicationService(this.context,this.activity,false,1);
         ConnectionServer sendToken = new ConnectionServer();
-        sendToken.setUrl("http://10.0.2.2/serveurOpenBar/server.php?id=10&ctrl=addKey&token_user="+token+"&id_user=2");
+        //sendToken.setUrl("http://10.0.2.2/serveurOpenBar/server.php?id=10&ctrl=addKey&token_user="+token+"&id_user=2");
+        sendToken.setUrl("http://149.202.51.217/serveurOpenBar/server.php?id=10&ctrl=addKey&token_user="+token+"&id_user=2");
         sendToken.post();
         sendToken.close();
     }

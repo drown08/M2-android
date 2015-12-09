@@ -1,11 +1,19 @@
 package Evenement;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.openbar.frappereauolivier.openbar.Activity.ConnexionActivity;
 import com.openbar.frappereauolivier.openbar.Activity.FocusActivity;
 import com.openbar.frappereauolivier.openbar.Activity.ForgetMailActivity;
@@ -23,6 +31,8 @@ import java.util.Arrays;
 
 import CommunicationServeur.AsyncTaskResponse;
 import CommunicationServeur.CommunicationService;
+import google.QuickstartPreferences;
+import google.RegistrationIntentService;
 import Transaction.Transaction;
 import Validation.ConnexionValidation;
 import Validation.ForgotPasswordValidation;
@@ -249,6 +259,25 @@ public class OnClickEventInscriptionConnexionForgot implements View.OnClickListe
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    /** AJOUT TEST REGISTER NOTIF PUSH GOOGLE **/
+                    //CommunicationService communication = new CommunicationService(this,this.myActivity,true,5);
+                    BroadcastReceiver mRegistrationBroadCastReceiver = new BroadcastReceiver() {
+                        @Override
+                        public void onReceive(Context context, Intent intent) {
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+                            boolean sentToken = sharedPreferences.getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER,false);
+                            if(sentToken) {
+                                Toast.makeText(myActivity.getApplicationContext(),"Token envoyé",Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(myActivity.getApplicationContext(),"Erreur Token non envoyé",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    };
+                    if(checkPlayServices()){
+                        Intent intent = new Intent(this.myActivity, RegistrationIntentService.class);
+                        myActivity.startService(intent);
+                    }
+                    /** AJOUT TEST REGISTER NOTIF PUSH GOOGLE **/
                     Transaction goFocus = new Transaction(myActivity, FocusActivity.class);
                     goFocus.addExtras("user",new ArrayList<String>(Arrays.asList(user)));
                     goFocus.runWithoutExit();
@@ -282,5 +311,21 @@ public class OnClickEventInscriptionConnexionForgot implements View.OnClickListe
         }
     passMD5 =  MD5Hash.toString();
     return passMD5;
+    }
+
+    private boolean checkPlayServices(){
+        int resultCOde = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this.myActivity);
+        if(resultCOde != ConnectionResult.SUCCESS) {
+            if(GooglePlayServicesUtil.isUserRecoverableError(resultCOde)) {
+                //PLAY_SERVICES_RESOLUTION_REQUEST dont found
+                GooglePlayServicesUtil.getErrorDialog(resultCOde,this.myActivity,GooglePlayServicesUtil.GOOGLE_PLAY_SERVICES_VERSION_CODE).show();
+            } else {
+                Log.i("CheckPlayService","This device is not Supported");
+                this.myActivity.finish();
+                //bleulliette Janvier1994
+            }
+            return false;
+        }
+        return true;
     }
 }

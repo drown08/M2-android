@@ -36,7 +36,8 @@
     <string name="checking">Cheking...</string>
     <string name="pseudo_already_use">Pseudo already used. Try an another</string>
     <string name="sign_done">Signup successfull ! Connexion...</string>
-    <string name="sign_undo">Signup don't work ! Database is shutdown.</string>
+    <string name="sign_undo">Signup don\'t work ! Database is shutdown.</string>
     <string name="connect_undo">An error with pass or login. Try again</string>
     <string name="my_bars">My bars</string>
+    <string name="no_bar_available">you haven\'t bars anymore</string>
 </resources>

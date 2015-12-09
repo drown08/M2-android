@@ -48,8 +48,16 @@
                 android:layout_height="match_parent"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_weight="1" />
-        </android.support.v4.widget.SwipeRefreshLayout>
 
+        </android.support.v4.widget.SwipeRefreshLayout>
+        <TextView
+            android:id="@+id/empty_list_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:text="@string/no_bar_available"
+            />
         <!-- <include layout="@layout/floating_button_add_bar_layout" /> -->
        <!-- <RelativeLayout
             android:layout_width="match_parent"
