@@ -2,14 +2,13 @@ package Evenement;
 
 import android.app.Activity;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.openbar.frappereauolivier.openbar.Activity.FocusActivity;
-import com.openbar.frappereauolivier.openbar.R;
 
 import java.util.ArrayList;
 
+import CommunicationServeur.CommunicationService;
 import Model.Bar;
 
 /**
@@ -27,6 +26,7 @@ public class OnRefreshListBar implements SwipeRefreshLayout.OnRefreshListener {
     public void onRefresh() {
         // Refresh items
         refreshItems();
+        focusElement.setRefreshing(false);
     }
 
     private void refreshItems() {
@@ -38,24 +38,25 @@ public class OnRefreshListBar implements SwipeRefreshLayout.OnRefreshListener {
         ArrayList<Bar> tmp = new ArrayList<Bar>();
         //TODO : Service qui appelle la communication Serveur avec comme info UserPseudo
         // Et comme serviceDuServeur : donne moi la liste des bars de UserPseudo
-        tmp.add(new Bar("Bar 1","Happy Hours Ref", R.drawable.options_test));
+       /* tmp.add(new Bar("Bar 1","Happy Hours Ref", R.drawable.options_test));
         tmp.add(new Bar("Bar 2","Diffuse match rugby Ref",R.drawable.options_test));
         tmp.add(new Bar("Bar 3","Rien Ref",R.drawable.options_test));
         tmp.add(new Bar("Bar 4","3 amis ici Ref",R.drawable.options_test));
         tmp.add(new Bar("Bar 5","Ajouter hier Ref",R.drawable.options_test));
         tmp.add(new Bar("Bar 6", "Folie ! Ref", R.drawable.options_test));
         tmp.add(new Bar("Bar 7","Diffuse match basket Ref",R.drawable.options_test));
-        tmp.add(new Bar("Bar 8","Diffuse match Hockey Ref",R.drawable.options_test));
+        tmp.add(new Bar("Bar 8","Diffuse match Hockey Ref",R.drawable.options_test));*/
 
-       // CommunicationService getBarsOfUser = new CommunicationService(this.myActivity,this.myActivity,true,2);
-       // getBarsOfUser.addParams("ctrl", "bars");//getBarOfCurrentUser à remplacer à la place
-       // getBarsOfUser.addParams("id_user", String.valueOf(this.myActivity.currentUser.getRefImg()));
-       // getBarsOfUser.sendToServer();
-       // getBarsOfUser.flush();
+        CommunicationService getBarsOfUser = new CommunicationService(this.myActivity,this.myActivity,true,2);
+        getBarsOfUser.addParams("ctrl", "getBarOfCurrentUser");//getBarOfCurrentUser à remplacer à la place
+        //getBarsOfUser.addParams("id_user", String.valueOf(this.myActivity.currentUser.getRefImg()));
+        getBarsOfUser.addParams("id_user", "12");
+        getBarsOfUser.sendToServer();
+        getBarsOfUser.flush();
         // Load complete
-        Log.d("TAILLE-LIST-BAR-AV", String.valueOf(this.myActivity.myBars.size()));
-        onItemsLoadComplete(tmp);
-        Log.d("TAILLE-LIST-BAR-AV", String.valueOf(this.myActivity.myBars.size()));
+        //Log.d("TAILLE-LIST-BAR-AV", String.valueOf(this.myActivity.myBars.size()));
+        //onItemsLoadComplete(tmp);
+        //Log.d("TAILLE-LIST-BAR-AV", String.valueOf(this.myActivity.myBars.size()));
     }
 
    private void onItemsLoadComplete(ArrayList<Bar> lb) {

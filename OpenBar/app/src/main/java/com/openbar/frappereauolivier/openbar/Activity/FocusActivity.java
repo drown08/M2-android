@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.openbar.frappereauolivier.openbar.R;
 
@@ -39,11 +40,9 @@ public class FocusActivity extends AppCompatActivity implements AsyncTaskRespons
     public BarAdapter barAdapter;
     public ArrayList<Bar> myBars;
     public FloatingActionButton myFABAddBar;
-    public FloatingActionButton myFABMiniAddBar1;
-    public FloatingActionButton myFABMiniAddBar2;
     public SwipeRefreshLayout mySRL;
     public TextView myTextViewEmptyList;
-    public Contact currentUser;
+    public static Contact currentUser;
 
 //TODO : Installer et utiliser ActionBarSherlock ?
     @Override
@@ -112,14 +111,6 @@ public class FocusActivity extends AppCompatActivity implements AsyncTaskRespons
         this.myFABAddBar = (FloatingActionButton)findViewById(R.id.fab);
         this.myFABAddBar.setOnClickListener(new OnClickAddBarFAB(this, myFABAddBar));
         this.myFABAddBar.show();
-
-        this.myFABMiniAddBar1 = (FloatingActionButton) findViewById(R.id.fab_mini_1);
-        this.myFABMiniAddBar1.setOnClickListener(new OnClickAddBarFAB(this,myFABMiniAddBar1));
-        this.myFABMiniAddBar1.hide();
-
-        this.myFABMiniAddBar2 = (FloatingActionButton) findViewById(R.id.fab_mini_2);
-        this.myFABMiniAddBar2.setOnClickListener(new OnClickAddBarFAB(this, myFABMiniAddBar2));
-        this.myFABMiniAddBar2.hide();
     }
 
     private void setToolBarView() {
@@ -134,31 +125,33 @@ public class FocusActivity extends AppCompatActivity implements AsyncTaskRespons
     }
 
     private void setListOfBarView(){
-        this.recListBar = (RecyclerView) findViewById(R.id.cardListBar);
-        //this.recListBar.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        this.recListBar.setLayoutManager(llm);
-        //Call Service to getBars
-        //setListBar();
-        //this.myBars = setListBar();
+        if(this.recListBar == null) {
+            this.recListBar = (RecyclerView) findViewById(R.id.cardListBar);
+            //this.recListBar.setHasFixedSize(true);
+            LinearLayoutManager llm = new LinearLayoutManager(this);
+            llm.setOrientation(LinearLayoutManager.VERTICAL);
+            this.recListBar.setLayoutManager(llm);
+            //Call Service to getBars
+            //setListBar();
+            //this.myBars = setListBar();
+        }
     }
 
     private void setListBar() {
         //TODO : Service qui appelle la communication Serveur avec comme info UserPseudo
         CommunicationService getBarsOfUser = new CommunicationService(this,this,true,2);
-        getBarsOfUser.addParams("ctrl", "bars");//getBarOfCurrentUser à remplacer à la place
-        getBarsOfUser.addParams("id_user", String.valueOf(this.currentUser.getRefImg()));
+        getBarsOfUser.addParams("ctrl", "getBarOfCurrentUser");//getBarOfCurrentUser à remplacer à la place
+        getBarsOfUser.addParams("id_user", "12");
         getBarsOfUser.sendToServer();
         getBarsOfUser.flush();
     }
 
     public void setListAdapterBar() {
-        if(this.barAdapter == null){
+        //if(this.barAdapter == null){
             this.barAdapter = new BarAdapter(myBars,this);
             this.recListBar.setAdapter(barAdapter);
             this.recListBar.setItemAnimator(new DefaultItemAnimator());
-            if(this.mySRL == null){
+            //if(this.mySRL == null){
                 //Set refresh action to the liste
                 this.mySRL = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
                 this.mySRL.setOnRefreshListener(new OnRefreshListBar(this, this.mySRL));
@@ -185,8 +178,8 @@ public class FocusActivity extends AppCompatActivity implements AsyncTaskRespons
 
                     }
                 });*/
-            }
-        }
+            //}
+       // }
 
     }
 
@@ -196,9 +189,8 @@ public class FocusActivity extends AppCompatActivity implements AsyncTaskRespons
 
     @Override
     public void onResume(){
-        Log.d("StartSUPERONRESUME","====================================");
         super.onResume();
-        Log.d("StartONRESUME", "====================================");
+        // put your code here...
 
     }
 
@@ -236,6 +228,7 @@ public class FocusActivity extends AppCompatActivity implements AsyncTaskRespons
                         barTmp.setLogo(R.drawable.common_google_signin_btn_icon_light_normal);
                         tmp.add(barTmp);
                     }
+                    Toast.makeText(getApplicationContext(),"TAILLE LISTE : "+String.valueOf(tmp.size()),Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -253,10 +246,19 @@ public class FocusActivity extends AppCompatActivity implements AsyncTaskRespons
                     setListAdapterBar();
                 }
                 break;
+            case 3 : //DELETE BAR
+                Toast.makeText(getApplicationContext(),"Bar deleted ",Toast.LENGTH_SHORT).show();
+                break;
+            case 4 : //RE-ADD-DELETED-BAR (UNDO)
+                Toast.makeText(getApplicationContext(),"Undo Bar Deleted ",Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 
     private void setEmptyListView(){
-        this.myTextViewEmptyList = (TextView) this.findViewById(R.id.empty_list_bar);
+        if(this.myTextViewEmptyList == null) {
+            this.myTextViewEmptyList = (TextView) this.findViewById(R.id.empty_list_bar);
+            this.myTextViewEmptyList.setVisibility(View.INVISIBLE);
+        }
     }
 }

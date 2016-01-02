@@ -51,4 +51,11 @@ public class ForgetMailActivity extends Activity {
         }
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        // put your code here...
+
+    }
+
 }

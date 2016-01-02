@@ -19,9 +19,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -39,27 +38,35 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true" android:permission="com.google.android.c2dm.permission.SEND">
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="com.openbar.frappereauolivier.openbar"/>
+
+                <category android:name="com.openbar.frappereauolivier.openbar" />
             </intent-filter>
         </receiver>
 
-        <service android:name="google.MyGcmListenerService" android:exported="false">
+        <service
+            android:name="google.MyGcmListenerService"
+            android:exported="false" >
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
-
-        <service android:name="google.MyInstanceIDListenerService" android:exported="false">
+        <service
+            android:name="google.MyInstanceIDListenerService"
+            android:exported="false" >
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID"/>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
-
-        <service android:name="google.RegistrationIntentService" android:exported="false"/>
+        <service
+            android:name="google.RegistrationIntentService"
+            android:exported="false" />
 
         <activity
             android:name=".Activity.InscriptionActivity"
@@ -77,8 +84,6 @@
             android:name=".Activity.BarActivity"
             android:label="@string/title_activity_bar"
             android:parentActivityName=".Activity.FocusActivity" >
-
-            <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".Activity.FocusActivity" />
@@ -93,14 +98,27 @@
 
         <activity
             android:name=".Activity.AddBarMapActivity"
-            android:label="@string/title_activity_add_bar_map" >
+            android:label="@string/title_activity_add_bar_map"
+            android:parentActivityName=".Activity.FocusActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.openbar.frappereauolivier.openbar.Activity.FocusActivity" />
+                android:value=".Activity.FocusActivity" />
         </activity>
         <activity
             android:name=".Activity.ProfilActivity"
-            android:label="@string/title_activity_profil" >
+            android:label="@string/title_activity_profil"
+            android:parentActivityName=".Activity.FocusActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activity.FocusActivity" />
+        </activity>
+        <activity
+            android:name=".Activity.DiceShakerActivity"
+            android:label="@string/title_activity_dice_shaker"
+            android:parentActivityName=".Activity.BarActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activity.BarActivity" />
         </activity>
     </application>
 

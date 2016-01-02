@@ -11,15 +11,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.openbar.frappereauolivier.openbar.Activity.ProfilActivity;
 import com.openbar.frappereauolivier.openbar.R;
 
+import CommunicationServeur.AsyncTaskResponse;
+import CommunicationServeur.ConnectionServer;
+
 /**
  * Created by Frappereau Olivier on 22/11/2015.
  */
-public class TabContactInfos extends Fragment {
+public class TabContactInfos extends Fragment implements AsyncTaskResponse {
     public View mainV;
     public ImageView photoUser;
     public Button takeAPhoto;
@@ -68,7 +70,18 @@ public class TabContactInfos extends Fragment {
         this.changeInfos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mainV.getContext(),"Create activity form change user",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mainV.getContext(),"Create activity form change user",Toast.LENGTH_SHORT).show();
+                //EXEMPLE ACTIVER NOTIFICATION
+                //CommunicationService goNotif = new CommunicationService();
+                ConnectionServer send = new ConnectionServer();
+                //sendToken.setUrl("http://149.202.51.217/serveurOpenBar/server.php?id=10&ctrl=getKey&id_user=12");
+                send.setUrl("http://drown88801.freeheberg.org/serveurOpenBar/server.php?id=10&ctrl=getKey&id_user=12");
+                //sendToken.setUrl("http://149.202.51.217/serveurOpenBar/server.php?id=10&ctrl=addKey&token_user="+token+"&id_user=2");
+                send.post();
+                send.close();
+               // goNotif.addParams("ctrl","getKey");
+               // goNotif.addParams("id_user",ProfilActivity.exemple);
+               // goNotif.sendToServer();
             }
         });
 
@@ -83,5 +96,10 @@ public class TabContactInfos extends Fragment {
 
         this.upAPhoto = (Button) this.mainV.findViewById(R.id.profil_upload_photo);
         this.upAPhoto.setClickable(false);
+    }
+
+    @Override
+    public void processFinish(String output, int flag) {
+
     }
 }

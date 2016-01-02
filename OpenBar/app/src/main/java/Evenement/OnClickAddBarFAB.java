@@ -16,8 +16,8 @@ import Transaction.Transaction;
 public class OnClickAddBarFAB implements View.OnClickListener {
     Activity myActivity;
     FloatingActionButton myMainFAB;
-    FloatingActionButton myFirstMinFAB;
-    FloatingActionButton mySecondMiniFAB;
+    //FloatingActionButton myFirstMinFAB;
+    //FloatingActionButton mySecondMiniFAB;
     FloatingActionButton myTarget;
     Boolean isShow;
 
@@ -26,8 +26,8 @@ public class OnClickAddBarFAB implements View.OnClickListener {
         this.myTarget = target;
         this.isShow = false;
         this.myMainFAB = (FloatingActionButton) myActivity.findViewById(R.id.fab);
-        this.myFirstMinFAB = (FloatingActionButton) myActivity.findViewById(R.id.fab_mini_1);
-        this.mySecondMiniFAB = (FloatingActionButton) myActivity.findViewById(R.id.fab_mini_2);
+        //this.myFirstMinFAB = (FloatingActionButton) myActivity.findViewById(R.id.fab_mini_1);
+        //this.mySecondMiniFAB = (FloatingActionButton) myActivity.findViewById(R.id.fab_mini_2);
     }
 
     @Override
@@ -35,26 +35,28 @@ public class OnClickAddBarFAB implements View.OnClickListener {
         switch ((this.myTarget.getId()))
         {
             case R.id.fab :
-                this.isShow = this.myFirstMinFAB.isShown();
+                //this.isShow = this.myFirstMinFAB.isShown();
                 Toast.makeText(this.myActivity.getApplicationContext(),"Ajout bar",Toast.LENGTH_SHORT).show();
-                if(this.isShow) {
+                Transaction transaction = new Transaction(this.myActivity, AddBarMapActivity.class);
+                transaction.runWithoutExit();
+                /*if(this.isShow) {
                     this.myFirstMinFAB.hide();
                     this.mySecondMiniFAB.hide();
                 } else {
                     this.myFirstMinFAB.show();
                     this.mySecondMiniFAB.show();
-                }
+                }*/
 
                 //www;imkan.fr
                 break;
-            case R.id.fab_mini_1 :
+            /*case R.id.fab_mini_1 :
                 Toast.makeText(this.myActivity.getApplicationContext(),"Via formulaire",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fab_mini_2 :
                 Toast.makeText(this.myActivity.getApplicationContext(),"Via locate",Toast.LENGTH_SHORT).show();
                 Transaction transaction = new Transaction(this.myActivity, AddBarMapActivity.class);
                 transaction.runWithoutExit();
-                break;
+                break;*/
 
         }
 

@@ -61,6 +61,12 @@
             android:layout_weight="1"
             android:scrollIndicators="none" />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/display_taking_picture"
+            android:visibility="visible"/>
+
 
     </LinearLayout>
     </ScrollView>

@@ -40,4 +40,5 @@
     <string name="connect_undo">An error with pass or login. Try again</string>
     <string name="my_bars">My bars</string>
     <string name="no_bar_available">you haven\'t bars anymore</string>
+    <string name="title_activity_dice_shaker">DiceShakerActivity</string>
 </resources>

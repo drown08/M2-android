@@ -58,6 +58,13 @@ public class ConnexionActivity extends Activity {
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        // put your code here...
+
+    }
+
     private void setSpecifyPresentation() {
         this.header.setText(R.string.connexion);
     }

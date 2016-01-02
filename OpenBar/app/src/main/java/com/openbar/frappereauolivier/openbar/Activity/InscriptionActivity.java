@@ -61,6 +61,13 @@ public class InscriptionActivity extends Activity {
 
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        // put your code here...
+
+    }
+
     private void setSpecifyPresentation() {
         header.setText(R.string.inscription);
     }

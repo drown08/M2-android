@@ -18,6 +18,7 @@ import Model.Contact;
 public class ProfilActivity extends AppCompatActivity {
     Toolbar myToolbar;
     public static Contact currentUser;
+    public static String exemple;
     ViewPager pager;
     DetailProfilAdapter adapter;
     TabLayout tabLayout;
@@ -32,12 +33,19 @@ public class ProfilActivity extends AppCompatActivity {
         setSpecifyPresentation();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        // put your code here...
+
+    }
+
     private void setCurrentUser() {
         //TODO : Reccuperer l'id de l'user depuis la transaction et aller chercher le User (contact) Dans la BDD
         //String currentName = this.getIntent().getStringExtrat("user");
         //CommunicationService comm = new ...
         currentUser = new Contact(R.drawable.profil,"testUser","bidule");
-
+        exemple = this.getIntent().getStringExtra("user");
     }
 
     private void setSpecifyPresentation() {

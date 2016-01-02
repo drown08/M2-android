@@ -2,7 +2,8 @@
 // if text data was posted
 $GOOGLE_API_KEY="AIzaSyCceG-_79VEXIiPTUpLx6ssKWsCFbxfZfg";
 try{
-$db = new PDO('mysql:host=localhost;dbname=bd_open_bar','root','');
+//$db = new PDO('mysql:host=localhost;dbname=bd_open_bar','root','');
+$db = new PDO('mysql:host=localhost;dbname=bd_open_bar','oliv','root');
 }
 catch(Exception $e)
 {

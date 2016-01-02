@@ -8,6 +8,9 @@ import com.openbar.frappereauolivier.openbar.Activity.ConnexionActivity;
 import com.openbar.frappereauolivier.openbar.Activity.ProfilActivity;
 import com.openbar.frappereauolivier.openbar.R;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import Transaction.Transaction;
 
 /**
@@ -34,6 +37,8 @@ public class OnActionBarMenuSelected {
             case R.id.action_favorite : // CLIQUE SUR PROFIL
                 Toast.makeText(this.myActivity.getApplicationContext(),"Profil",Toast.LENGTH_SHORT).show();
                 Transaction goProfil = new Transaction(this.myActivity, ProfilActivity.class);
+                //ENVOI EXTRA ID USER POUR PECHO l'ID A ENVOYER AU SERVEUR
+                goProfil.addExtras("user", new ArrayList<String>(Arrays.asList("12")));
                 goProfil.runWithoutExit();
                 return true;
 
@@ -42,8 +47,10 @@ public class OnActionBarMenuSelected {
                 return true;
 
             default:
-                Activity tmp = (Activity) this.myActivity; //Cast in super class for the default case (return super.onOptionsItemSelected
-                return tmp.onOptionsItemSelected(this.myItem);
+                //Activity tmp = (Activity) this.myActivity; //Cast in super class for the default case (return super.onOptionsItemSelected
+                //return tmp.onOptionsItemSelected(this.myItem);
+                return this.myActivity.onOptionsItemSelected(this.myItem);
+                //return true;
         }
     }
 }

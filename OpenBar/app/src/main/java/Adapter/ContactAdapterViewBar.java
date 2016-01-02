@@ -1,5 +1,7 @@
 package Adapter;
 
+import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,10 +21,14 @@ import Model.Contact;
     public class ContactAdapterViewBar extends RecyclerView.Adapter<ContactViewHolder> {
 
     private ArrayList<Contact> contacts;
+    Activity myActivity;
+    Fragment myFragment;
 
-    public  ContactAdapterViewBar(ArrayList<Contact> l) {
+    public  ContactAdapterViewBar(ArrayList<Contact> l, Activity activity, Fragment fragment) {
         this.contacts = new ArrayList<Contact>();
         this.contacts.addAll(l);
+        this.myActivity = activity;
+        this.myFragment = fragment;
     }
 
     @Override
@@ -35,7 +41,7 @@ import Model.Contact;
     @Override
     public void onBindViewHolder(ContactViewHolder holder, int position) {
         Contact c = contacts.get(position);
-        holder.setMyComponents();
+        holder.setMyComponents(this.myActivity,this.myFragment);
         holder.bindMyComponents(c);
     }
 

@@ -1,16 +1,18 @@
 package Adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.openbar.frappereauolivier.openbar.R;
 
 import java.util.ArrayList;
 
+import Evenement.OnClickChoiceNotif;
+import FragmentBar.TabContactNotifications;
 import ItemViewHolder.NotifViewHolder;
 import Model.NotificationUser;
 
@@ -21,10 +23,14 @@ public class NotifAdapter extends RecyclerView.Adapter<NotifViewHolder> {
     private ArrayList<NotificationUser> notifList;
     private View itemNotifView;
     private Context context;
+    Activity myActivity;
+    TabContactNotifications myFragment;
 
-    public NotifAdapter(ArrayList<NotificationUser> myNotifs, Context context) {
+    public NotifAdapter(ArrayList<NotificationUser> myNotifs,Context context, TabContactNotifications fragment) {
         this.notifList = myNotifs;
+        this.myFragment = fragment;
         this.context = context;
+        this.myActivity = fragment.getActivity();
     }
 
     @Override
@@ -41,60 +47,20 @@ public class NotifAdapter extends RecyclerView.Adapter<NotifViewHolder> {
         holder.objectNotif.setText(notif.getObject());
         switch (notif.getTypeAction()) {
             case "invitation":
-                holder.buttonAction1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(context,"Click at Accept",Toast.LENGTH_SHORT).show();
-                        removeNotif(position);
-                    }
-                });
                 holder.buttonAction1.setText("Accept");
-                holder.buttonAction2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(context,"Click at Refuse",Toast.LENGTH_SHORT).show();
-                        removeNotif(position);
-                    }
-                });
                 holder.buttonAction2.setText("Refuse");
                 break;
             case "infos":
-                holder.buttonAction1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(context,"Click at ok",Toast.LENGTH_SHORT).show();
-                        removeNotif(position);
-                    }
-                });
                 holder.buttonAction1.setText("Ok");
-                holder.buttonAction2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(context,"Click at osef",Toast.LENGTH_SHORT).show();
-                        removeNotif(position);
-                    }
-                });
                 holder.buttonAction2.setText("Don't care");
                 break;
             case "proposition":
-                holder.buttonAction1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(context,"Click at Confirm",Toast.LENGTH_SHORT).show();
-                        removeNotif(position);
-                    }
-                });
                 holder.buttonAction1.setText("Confirm");
-                holder.buttonAction2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(context,"Click at Denied",Toast.LENGTH_SHORT).show();
-                        removeNotif(position);
-                    }
-                });
                 holder.buttonAction2.setText("Denied");
                 break;
         }
+        holder.buttonAction1.setOnClickListener(new OnClickChoiceNotif(this.myActivity, this.myFragment, this, position, notif.getTypeAction(), 1, notif,holder));
+        holder.buttonAction2.setOnClickListener(new OnClickChoiceNotif(this.myActivity, this.myFragment, this, position, notif.getTypeAction(), 0, notif,holder));
     }
 
     @Override
@@ -103,8 +69,9 @@ public class NotifAdapter extends RecyclerView.Adapter<NotifViewHolder> {
     }
 
     public void UPNotifList(ArrayList<NotificationUser> ln) {
-        this.notifList = ln;
-        notifyDataSetChanged();
+        this.notifList = new ArrayList<NotificationUser>(ln);;
+        //notifyDataSetChanged();
+        notifyItemRangeChanged(0, ln.size());
     }
 
     public void removeNotif(int position) {

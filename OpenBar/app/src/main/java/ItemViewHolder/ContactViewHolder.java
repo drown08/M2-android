@@ -1,8 +1,11 @@
 package ItemViewHolder;
 
+import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 
 import com.openbar.frappereauolivier.openbar.R;
 
+import Evenement.OnClickAtSocialAction;
 import Evenement.OnClickDisplayActionContacts;
 import Model.Contact;
 
@@ -23,9 +27,10 @@ public class ContactViewHolder extends RecyclerView.ViewHolder {
     protected ImageButton actionPrincipale;
     protected LinearLayout actionSecondaire;
     protected TextView nomPrenom;
-    protected TextView action1;
-    protected TextView action2;
-    protected TextView action3;
+    protected Button action1;
+    protected Button action2;
+    protected Button action3;
+    String nom;
 
     public ContactViewHolder(View itemView) {
         super(itemView);
@@ -38,16 +43,21 @@ public class ContactViewHolder extends RecyclerView.ViewHolder {
         this.actionPrincipale = (ImageButton) itemView.findViewById(R.id.action_principale_contact);
         this.actionSecondaire = (LinearLayout) itemView.findViewById(R.id.display_hide_action);
         this.nomPrenom = (TextView) itemView.findViewById(R.id.detail_contact);
-        this.action1 = (TextView) itemView.findViewById(R.id.contact_action_1);
-        this.action2 = (TextView) itemView.findViewById(R.id.contact_action_2);
-        this.action3 = (TextView) itemView.findViewById(R.id.contact_action_3);
-
+        this.action1 = (Button) itemView.findViewById(R.id.contact_action_1);
+        this.action2 = (Button) itemView.findViewById(R.id.contact_action_2);
+        this.action3 = (Button) itemView.findViewById(R.id.contact_action_3);
+        this.action1.setClickable(true);
+        this.action2.setClickable(true);
+        this.action3.setClickable(true);
     }
 
-    public void setMyComponents() {
+    public void setMyComponents(Activity activity,Fragment fragment) {
         this.actionSecondaire.setVisibility(View.GONE);
         this.logo.setClickable(true);
         this.logo.setOnClickListener(new OnClickDisplayActionContacts(this));
+        this.action1.setOnClickListener(new OnClickAtSocialAction(activity, fragment, 1, this.nom));
+        this.action2.setOnClickListener(new OnClickAtSocialAction(activity, fragment, 2, this.nom));
+        this.action3.setOnClickListener(new OnClickAtSocialAction(activity,fragment,3,this.nom));
     }
 
     public void bindMyComponents(Contact c) {
@@ -58,6 +68,7 @@ public class ContactViewHolder extends RecyclerView.ViewHolder {
             this.actionPrincipale.setImageResource(R.drawable.icone_refresh_48);
         }
         this.nomPrenom.setText(c.getNom()+" "+c.getPrenom());
+        this.nom = c.getNom();
     }
 
     public void setLogo(ImageView logo) {
@@ -68,15 +79,15 @@ public class ContactViewHolder extends RecyclerView.ViewHolder {
         this.nomPrenom = nomPrenom;
     }
 
-    public void setAction1(TextView action1) {
+    public void setAction1(Button action1) {
         this.action1 = action1;
     }
 
-    public void setAction2(TextView action2) {
+    public void setAction2(Button action2) {
         this.action2 = action2;
     }
 
-    public void setAction3(TextView action3) {
+    public void setAction3(Button action3) {
         this.action3 = action3;
     }
 
@@ -92,15 +103,15 @@ public class ContactViewHolder extends RecyclerView.ViewHolder {
         this.card = card;
     }
 
-    public TextView getAction1() {
+    public Button getAction1() {
         return action1;
     }
 
-    public TextView getAction2() {
+    public Button getAction2() {
         return action2;
     }
 
-    public TextView getAction3() {
+    public Button getAction3() {
         return action3;
     }
 

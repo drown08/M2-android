@@ -60,26 +60,26 @@
                 android:paddingTop="4dp"
                 android:paddingBottom="8dp"/>
 
-            <TextView
+            <Button
                 android:id="@+id/contact_action_1"
            android:layout_width="match_parent"
            android:layout_height="38dp"
                 android:textColor="@color/black_overlay"
            android:text="Proposer de boire un verre"/>
 
-            <TextView
+            <Button
                 android:id="@+id/contact_action_2"
            android:layout_width="match_parent"
            android:layout_height="47dp"
                 android:textColor="@color/cardview_dark_background"
            android:text="Proposer de danser"/>
 
-            <TextView
+            <Button
                 android:id="@+id/contact_action_3"
                 android:layout_width="232dp"
                 android:layout_height="49dp"
                 android:textColor="@color/tabsScrollColor"
-                android:text="Proposer de sortir boire l'air"
+                android:text="Proposer de sortir"
                 android:visibility="visible" />
 
         </LinearLayout>

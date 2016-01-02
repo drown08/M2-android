@@ -55,7 +55,8 @@ public class AsyncRequestServer extends AsyncTask<String,Void,String> {
             this.tmp.dismiss();
         }
         Log.d("returnRepForFlag",String.valueOf(flag)+"-"+reponse);
-        delegate.processFinish(reponse,flag);
+        //if(delegate!=null)
+            delegate.processFinish(reponse,flag);
         //delegate.processFinish(reponse);
         //setMyReponse(reponse);
     }

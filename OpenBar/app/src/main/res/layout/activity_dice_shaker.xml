@@ -1,0 +1,43 @@
+<LinearLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:weightSum="1">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar_profil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_dark"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        />
+
+    <ImageView
+        android:src="@drawable/face_six"
+        android:layout_width="162dp"
+        android:layout_height="98dp"
+        android:id="@+id/dice2"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.5" />
+
+    <ImageView
+        android:src="@drawable/face_four"
+        android:layout_width="178dp"
+        android:layout_height="145dp"
+        android:id="@+id/dice1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="87dp"
+        android:layout_marginTop="140dp"
+        android:layout_gravity="center_horizontal" />
+
+
+</LinearLayout>
+

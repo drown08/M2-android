@@ -1,12 +1,9 @@
 package Evenement;
 
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-
+import CommunicationServeur.CommunicationService;
 import FragmentBar.TabContactNotifications;
-import Model.NotificationUser;
 
 /**
  * Created by Frappereau Olivier on 22/11/2015.
@@ -14,31 +11,22 @@ import Model.NotificationUser;
 public class OnRefreshListNotificationUser implements SwipeRefreshLayout.OnRefreshListener {
     TabContactNotifications context;
     SwipeRefreshLayout focusElement;
-
-    public OnRefreshListNotificationUser(TabContactNotifications context, SwipeRefreshLayout mySRL) {
+    public OnRefreshListNotificationUser(TabContactNotifications context, SwipeRefreshLayout focusElement) {
         this.context=context;
-        this.focusElement=mySRL;
+        this.focusElement = focusElement;
     }
 
     @Override
     public void onRefresh() {
         refreshNotifs();
+        focusElement.setRefreshing(false);
     }
 
     private void refreshNotifs() {
-        ArrayList<NotificationUser> tmp = new ArrayList<NotificationUser>();
-        tmp.add(new NotificationUser("Notification 5","Machin veut un truc","infos"));
-        tmp.add(new NotificationUser("Notification 6","Machin veut un truc","proposition"));
-        tmp.add(new NotificationUser("Notification 7","Machin veut un truc","infos"));
-        tmp.add(new NotificationUser("Notification 8","Machin veut un truc","invitation"));
-        tmp.add(new NotificationUser("Notification 11","Machin veut un truc","proposition"));
-        tmp.add(new NotificationUser("Notification 12","Machin veut un truc","proposition"));
-        onNotifLoadComplete(tmp);
-    }
-
-    private void onNotifLoadComplete(ArrayList<NotificationUser> ln) {
-        this.context.notifAdapter.UPNotifList(ln);
-        this.focusElement.setRefreshing(false);
-        Toast.makeText(context.getContext(),"Refresh notif ok",Toast.LENGTH_SHORT).show();
+        CommunicationService refreshList = new CommunicationService(context,context.getActivity(),true,1);
+        refreshList.addParams("ctrl", "getNotif");
+        refreshList.addParams("id_user","12");//TODO : réccup good id user current
+        refreshList.sendToServer();
+        refreshList.flush();
     }
 }

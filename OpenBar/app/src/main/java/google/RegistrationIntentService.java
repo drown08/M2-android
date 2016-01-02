@@ -30,21 +30,24 @@ public class RegistrationIntentService extends IntentService {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         InstanceID instanceID=null;
         try{
-            //Si jamais problème de synchro lors de pultiples refresh, il faut être synchro avant d'executer cette section.
+            //Si jamais problème de synchro lors de multiples refresh, il faut être synchro avant d'executer cette section.
             synchronized (TAG) {
                 instanceID = InstanceID.getInstance(this);
                 String token = instanceID.getToken(getString(R.string.google_id_app), GoogleCloudMessaging.INSTANCE_ID_SCOPE,null);
                // String token = instanceID.getToken("332561504331", GoogleCloudMessaging.INSTANCE_ID_SCOPE,null);
                 Log.i(TAG, "coucou av : " + instanceID.getId());
-                Thread.sleep(5000);
+                //Thread.sleep(5000);
                 //String token = instanceID.getToken(getString(R.string.google_id_app), "GCM");
 
                 //Log.i(TAG,"GCM Registration token"+token);
 
 
                 //Si l'opération a déjà était faite, pas la peine de réitérer
-                if(!sharedPreferences.getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER,false))
+               // if(!sharedPreferences.getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER,false)){
                     sendRegistrationToServer(token);
+
+                //}
+
 
                 //Il faut indiquer qu'on a envoyer au serveur
                 sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER,true).apply();
@@ -60,9 +63,10 @@ public class RegistrationIntentService extends IntentService {
 
     private void sendRegistrationToServer(String token) {
        // CommunicationService sendToken = new CommunicationService(this.context,this.activity,false,1);
+        Log.i(TAG, "Coucou pendant :"+token);
         ConnectionServer sendToken = new ConnectionServer();
-        //sendToken.setUrl("http://10.0.2.2/serveurOpenBar/server.php?id=10&ctrl=addKey&token_user="+token+"&id_user=2");
-        sendToken.setUrl("http://149.202.51.217/serveurOpenBar/server.php?id=10&ctrl=addKey&token_user="+token+"&id_user=2");
+        sendToken.setUrl("http://drown88801.freeheberg.org/serveurOpenBar/server.php?id=10&ctrl=addKey&token_user="+token+"&id_user=12");
+        //sendToken.setUrl("http://149.202.51.217/serveurOpenBar/server.php?id=10&ctrl=addKey&token_user="+token+"&id_user=2");
         sendToken.post();
         sendToken.close();
     }

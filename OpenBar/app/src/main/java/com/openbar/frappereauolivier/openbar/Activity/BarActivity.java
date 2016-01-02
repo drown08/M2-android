@@ -1,13 +1,17 @@
 package com.openbar.frappereauolivier.openbar.Activity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.openbar.frappereauolivier.openbar.R;
 
@@ -39,7 +43,7 @@ public class BarActivity extends AppCompatActivity {
         //TODO : Reccuperer l'id du bar depuis la transaction et aller le chercher en bdd
         String barName = this.getIntent().getStringExtra("bar"); //On réccupère l'id via la précédente activité
         //Puis simulation d'appelle à la BDD via CommunicationService pour réccupérer le bar en question
-        myBar = new Bar("Test"+barName,"ppcdkd",R.drawable.options_test);
+        myBar = new Bar(barName,"ppcdkd",R.drawable.options_test);
         //TODO : Reccupere l'id du bar depuis la transaction et aller chercher la liste des gens présents par rapport au profil co
         ArrayList<Contact> listeTmp = new ArrayList<Contact>();
         listeTmp.add(new Contact(R.drawable.ic_add,"Pierre","Paul",true));
@@ -109,4 +113,13 @@ public class BarActivity extends AppCompatActivity {
         OnActionBarMenuSelected tmpMnger = new OnActionBarMenuSelected(this,item);
         return tmpMnger.manageActionUsers();
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        // put your code here...
+
+    }
+
+
 }
